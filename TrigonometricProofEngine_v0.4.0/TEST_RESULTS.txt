@@ -1,0 +1,67 @@
+TRIGONOMETRIC PROOF ENGINE v0.4.0 — TEST RESULTS
+================================================
+
+Automated unit tests
+--------------------
+Command: python -m unittest discover -s tests -v
+Result: PASS
+Tests: 33
+Failures: 0
+Errors: 0
+
+Multi-identity catalogue proof 1
+--------------------------------
+Claim: 1 + tan(x)^2 = 1/cos(x)^2
+Result: PROVED
+Selected identity chain: F09 -> F03
+Step 1 — F09: 1 + tan(x)^2 = sec(x)^2
+Step 2 — F03: sec(x) = 1/cos(x)
+Each identity application is shown as a separate proof step.
+Variable substitution recorded for each identity: x -> x
+Common-domain condition: cos(x) != 0
+
+Multi-identity catalogue proof 2
+--------------------------------
+Claim: sin(x)^2 + cos(x)^2 = sec(y)^2 - tan(y)^2
+Result: PROVED
+Selected identity chain: F08 -> F11
+Step 1 — F08: sin(x)^2 + cos(x)^2 = 1
+Step 2 — F11: sec(y)^2 - tan(y)^2 = 1 (reverse direction)
+Variable substitutions: x -> x; x -> y
+Common-domain condition: cos(y) != 0
+
+Certificate checks
+------------------
+- JSON certificate schema: trigonometric-proof-certificate-v3
+- Engine version: 0.4.0
+- Each theorem application records its identity ID, direction, and variable substitution.
+- Each recorded transformation is checked for symbolic equivalence.
+- The used-identity list preserves the actual derivation order.
+
+Desktop report smoke test
+-------------------------
+- Report formatter executed successfully without opening a GUI window.
+- DERIVATION CHAIN section present.
+- F09 -> F03 ordering present.
+- Variable substitution text present.
+
+Catalogue
+---------
+- Indexed SKILL.md entries: 136
+- Executable equality rules: 125
+- Conditional/parameterized entries: 17 (not blindly applied without assumptions)
+- Inequality entries: 10 (not used as equality rewrite rules)
+
+Search limits and mathematical scope
+------------------------------------
+- Full-catalogue search is bounded to 7 identity applications and 260 visited expression states in a direct route.
+- Search is heuristic; it does not guarantee discovery of every possible proof.
+- INCONCLUSIVE means no proof was found within the selected strategy and limits; it does not mean the claim is false.
+- This is not a formally verified proof-assistant kernel.
+- Original domain restrictions are preserved, including after algebraic cancellation.
+
+Windows packaging
+-----------------
+- Python source compiles successfully in the development environment.
+- Native Windows EXE must be built on Windows using build_windows.bat or the included GitHub Actions workflow.
+- The packaged application is designed to operate offline at runtime.
