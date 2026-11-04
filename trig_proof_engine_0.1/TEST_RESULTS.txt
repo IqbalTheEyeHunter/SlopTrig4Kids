@@ -1,0 +1,27 @@
+TRIGONOMETRIC PROOF ENGINE — TEST REPORT
+Version: 0.1.0
+Test date: 2026-11-04
+
+Automated unit tests: 11 passed, 0 failed.
+
+Coverage:
+- Safe parsing of arithmetic and supported functions
+- pi and caret exponent normalisation
+- Textbook sin^2(x) / cos²(x) notation
+- Numeric coefficient shorthand (2sin(x))
+- Rejection of unsupported functions and attribute access
+- Pythagorean identity proof
+- Double-angle identity proof
+- Reciprocal identity proof
+- Angle-addition identity proof
+- False identity counterexample detection
+
+Manual smoke tests:
+- sin(x)^2 + cos(x)^2 = 1 -> PROVED
+- 1 + tan(x)^2 = sec(x)^2 -> PROVED
+- tan(x) + cot(x) = sec(x)*csc(x) -> PROVED
+- sin(x+y) = sin(x)cos(y) + cos(x)sin(y) -> PROVED
+- (1-cos(2x))/sin(2x) = tan(x) -> PROVED
+- sin(x) = cos(x) -> DISPROVED (counterexample found)
+
+Note: These tests validate the current first-version scope. They do not establish completeness for all possible trigonometric identities.

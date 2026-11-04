@@ -1,0 +1,57 @@
+TRIGONOMETRIC PROOF ENGINE v0.3.1 — TEST REPORT
+Date: 2026-11-04
+
+ENGINE TESTS
+------------
+31 / 31 automated unit tests passed.
+
+Coverage includes:
+- Safe parsing of the six trigonometric functions and supported arithmetic.
+- Fundamental, double-angle, reciprocal, and compound-angle identity proofs.
+- False identity counterexample detection.
+- Original-domain condition preservation, including denominators cancelled by symbolic simplification.
+- Loading and exact symbolic validation of 125 executable equality formulas from 136 indexed SKILL.md entries.
+- Catalogue-guided proofs with explicit identity IDs and theorem provenance.
+- Algebraic factorisation and cancellation shown as separate proof steps.
+- Half-angle identity matching with angle substitution.
+- Proof-certificate recording of identity IDs and per-step references.
+- User premise validation and rejection of false premises.
+- Bidirectional theorem substitution.
+- Two-premise sequential proof chains.
+- Domain restriction inheritance from saved theorems.
+- Exclusion of nonzero numeric constants from domain restrictions.
+- Proof certificate reports engine version 0.3.1.
+
+DESKTOP UI SMOKE TEST
+---------------------
+Passed under a virtual X display.
+- Professional Tkinter interface initialized successfully at a reduced window size.
+- Proof Workspace, Theorem Bank, and Identity Library initialized with independent vertical scroll canvases.
+- Scrollbar and mouse-wheel event handlers initialized.
+- Mouse wheel over the proof page scrolls the page; mouse wheel over the report scrolls the report text.
+- Entered sin(x)**2/(1-cos(x)) = 1+cos(x).
+- Catalogue-guided mode returned PROVED using identity F18.
+- Application automatically scrolled the Proof Workspace to the Proof Report.
+- Proof report rendered inside a fixed-height 16-line text area with its own vertical scrollbar; report opens at its first line.
+- Back to inputs control returned the page to the top.
+- Entire report card remained within the visible page viewport at 900 × 600.
+
+BUILD STATUS
+------------
+Python source compiles successfully.
+Windows .exe must be packaged on Windows using build_windows.bat or the included GitHub Actions workflow.
+The packaged executable is designed to run offline; no network service is used at runtime.
+
+CATALOGUE SCOPE
+---------------
+136 indexed reference entries are loaded from SKILL.md.
+125 directly executable equality formulas are available for bidirectional proof search.
+17 conditional/parameterized entries are withheld from automatic rewriting until their assumptions can be represented safely.
+10 inequality entries are reference material, not equality rewrite rules.
+
+LIMITATIONS
+-----------
+Proof search is bounded (maximum eight identity substitutions and 140 visited expressions in a direct route).
+Conditional theorem assumptions are not yet represented as general logical hypotheses.
+Theorem-bank entries and proof certificates are auditable records, not a formal proof-kernel certification.
+Domain tracking is conservative and does not solve every trigonometric domain set.
