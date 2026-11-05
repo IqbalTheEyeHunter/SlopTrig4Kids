@@ -1,0 +1,28 @@
+{
+  "schema": "trigonometric-proof-knowledge-manifest-v1",
+  "engine_version": "0.5.0",
+  "knowledge_sources": [
+    {
+      "path": "SKILL.md",
+      "role": "legacy_six_function_identity_catalogue",
+      "authority": "dependency_gated"
+    },
+    {
+      "path": "V0.5_Proof_Knowledge_Handbook.md",
+      "role": "geometric_algebraic_analytic_and_equation_method_handbook",
+      "authority": "documented_knowledge_unless_checker_enabled"
+    }
+  ],
+  "enabled_geometric_certificates": ["G01", "G03", "G04"],
+  "enabled_foundational_theorem": "F08",
+  "f08_proof_route": ["G01", "G03", "G04"],
+  "f08_forbidden_premises": ["F08", "F09", "F10", "F11", "F12"],
+  "trusted_foundations": ["AX.REAL", "AX.EUCLID", "AX.AREA", "D.UNIT"],
+  "documented_but_not_yet_executable": {
+    "geometry": ["G02", "G05-G30"],
+    "algebraic_discrete": ["M01-M20"],
+    "analytic": ["AN01-AN10"],
+    "equation_solving": ["EQ01-EQ18"]
+  },
+  "certificate_schema": "trigonometric-geometric-proof-certificate-v1"
+}

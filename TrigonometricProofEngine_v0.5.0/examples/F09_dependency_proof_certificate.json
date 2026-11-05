@@ -1,0 +1,166 @@
+{
+  "schema": "trigonometric-proof-certificate-v4",
+  "engine_version": "0.5.0",
+  "dependency_policy": "audited-catalogue-replayed-v4-and-v0.5-geo-certificates",
+  "catalogue_dependency_manifest": {
+    "F01": [],
+    "F02": [],
+    "F03": [],
+    "F04": [],
+    "F08": [
+      "GEO.F08"
+    ],
+    "F05": [
+      "F01",
+      "F02"
+    ],
+    "F06": [
+      "F04"
+    ],
+    "F07": [
+      "F03"
+    ],
+    "F09": [
+      "F08",
+      "F01",
+      "F03"
+    ],
+    "F10": [
+      "F08",
+      "F02",
+      "F04"
+    ],
+    "F11": [
+      "F09"
+    ],
+    "F12": [
+      "F10"
+    ]
+  },
+  "dependency_provenance": [
+    "F09 depends on F08",
+    "F08 depends on GEO.F08",
+    "GEO.F08 is admitted only after replaying G01 → G03 → G04",
+    "F09 depends on F01",
+    "F09 depends on F03"
+  ],
+  "trusted_foundations": {
+    "F01-F04": "quotient/reciprocal definitions",
+    "F08": "Replayable GEO certificate G01 -> G03 -> G04; no F08/F09/F10 premise",
+    "GEO_BASE": "AX.REAL, AX.EUCLID, AX.AREA and D.UNIT are explicit trusted foundations"
+  },
+  "scope": [
+    "sin",
+    "cos",
+    "tan",
+    "cot",
+    "sec",
+    "csc"
+  ],
+  "claim": {
+    "lhs": "tan(x)**2 + 1",
+    "rhs": "cos(x)**(-2)"
+  },
+  "status": "PROVED",
+  "selected_route": "LHS using identity catalogue",
+  "domain_conditions": [
+    "cos(x) ≠ 0"
+  ],
+  "identity_ids": [
+    "F09",
+    "F03"
+  ],
+  "used_theorems": [
+    {
+      "name": "F09 — 1 + tan²x = sec²x",
+      "lhs": "tan(x)**2 + 1",
+      "rhs": "sec(x)**2",
+      "source": "Bundled SKILL.md identity catalogue",
+      "domain_conditions": [
+        "cos(x) ≠ 0"
+      ],
+      "proof_certificate": null,
+      "identity_id": "F09"
+    },
+    {
+      "name": "F03 — sec x = 1/cos x",
+      "lhs": "sec(x)",
+      "rhs": "1/cos(x)",
+      "source": "Bundled SKILL.md identity catalogue",
+      "domain_conditions": [
+        "cos(x) ≠ 0"
+      ],
+      "proof_certificate": null,
+      "identity_id": "F03"
+    }
+  ],
+  "steps": [
+    {
+      "title": "Start with the LHS",
+      "side": "LHS",
+      "from": null,
+      "to": "tan(x)**2 + 1",
+      "justification": "Original expression in the requested identity.",
+      "identity_ids": [],
+      "theorem_reference": null,
+      "domain_conditions": [],
+      "variable_substitution": {},
+      "symbolic_equivalence_check": null
+    },
+    {
+      "title": "Apply identity F09: 1 + tan²x = sec²x",
+      "side": "LHS",
+      "from": "tan(x)**2 + 1",
+      "to": "sec(x)**2",
+      "justification": "Apply established identity F09 in the forward direction to the matched subexpression. The instantiated identity is checked against the recorded step.",
+      "identity_ids": [
+        "F09"
+      ],
+      "theorem_reference": "F09 — 1 + tan²x = sec²x",
+      "domain_conditions": [
+        "cos(x) ≠ 0"
+      ],
+      "variable_substitution": {
+        "x": "x"
+      },
+      "symbolic_equivalence_check": true
+    },
+    {
+      "title": "Apply identity F03: sec x = 1/cos x",
+      "side": "LHS",
+      "from": "sec(x)**2",
+      "to": "cos(x)**(-2)",
+      "justification": "Apply established identity F03 in the forward direction to the matched subexpression. The instantiated identity is checked against the recorded step.",
+      "identity_ids": [
+        "F03"
+      ],
+      "theorem_reference": "F03 — sec x = 1/cos x",
+      "domain_conditions": [
+        "cos(x) ≠ 0"
+      ],
+      "variable_substitution": {
+        "x": "x"
+      },
+      "symbolic_equivalence_check": true
+    },
+    {
+      "title": "Match the target side",
+      "side": "LHS",
+      "from": "cos(x)**(-2)",
+      "to": "cos(x)**(-2)",
+      "justification": "The displayed identity substitutions establish the requested target form.",
+      "identity_ids": [],
+      "theorem_reference": null,
+      "domain_conditions": [],
+      "variable_substitution": {},
+      "symbolic_equivalence_check": true
+    }
+  ],
+  "alternative_routes": [],
+  "counterexample": null,
+  "counterexample_values": {
+    "lhs": null,
+    "rhs": null
+  },
+  "certificate_note": "This is a symbolic transformation record, not a proof object for an independently verified theorem prover. Original-domain restrictions are retained throughout."
+}
