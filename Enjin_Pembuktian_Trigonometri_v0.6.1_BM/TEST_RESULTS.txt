@@ -1,0 +1,60 @@
+ENJIN PEMBUKTIAN TRIGONOMETRI v0.6.1 — KEPUTUSAN PENGUJIAN EDISI BAHASA MELAYU
+=============================================================================
+
+Persekitaran
+------------
+Python 3.13; SymPy tersedia. Pengujian dijalankan dalam persekitaran Linux.
+Fail boleh laksana Windows tidak dibina dalam persekitaran ini.
+
+Pengujian automatik (dijalankan secara berasingan)
+-------------------------------------------------
+1. tests/test_circularity.py
+   Keputusan: 13 lulus, 0 gagal.
+   Meliputi perlindungan pembuktian berputar, kebergantungan teorem, penggunaan semula
+   F08/F09/F10 dan laluan pembuktian geometri bebas.
+
+2. tests/test_engine.py
+   Keputusan: 32 lulus, 0 gagal.
+   Meliputi parser, syarat domain, strategi pembuktian, katalog identiti, bank teorem
+   dan pengesahan rekod pembuktian.
+
+3. tests/test_geometric_report.py
+   Keputusan: 7 lulus, 0 gagal.
+   Meliputi paparan langkah G01/G03/G04, laporan katalog dalam Bahasa Melayu,
+   eksport Markdown, kes sasaran F08 yang disusun semula dan keserasian sijil.
+
+4. tests/test_question_bank_artifacts.py
+   Keputusan: 4 lulus, 0 gagal.
+   Meliputi kesepadanan 258 ID soalan dan penyelesaian, kandungan bank soalan sahaja,
+   ringkasan penjanaan dan penolakan pernyataan hampir serupa yang palsu.
+
+5. tests/test_localization.py
+   Keputusan: 6 lulus, 0 gagal.
+   Meliputi nama dan versi aplikasi, pemetaan strategi Bahasa Melayu, label status,
+   mesej ralat input, 136 ID pustaka identiti dan kesepadanan bank soalan/penyelesaian.
+
+JUMLAH: 62 ujian lulus, 0 gagal.
+
+Pengujian tambahan
+------------------
+- Python compileall bagi app.py, engine.py, geometry.py dan tests: LULUS.
+- Ujian antara muka Tkinter di bawah Xvfb: LULUS (tiga tab Bahasa Melayu, pustaka identiti dimuatkan, pembuktian F08 dipaparkan).
+- Eksport Markdown Bahasa Melayu: LULUS.
+- Pustaka identiti Bahasa Melayu: 136 entri berindeks, 125 peraturan kesamaan boleh laksana, 17 entri bersyarat dan 10 ketaksamaan.
+- ID bank soalan dan penyelesaian: 255 entri templat serta 3 soalan tambahan; jumlah 258 ID yang sepadan.
+- Pemetaan strategi paparan kepada nama strategi dalaman: LULUS.
+- Kod status, sintaks input, ID identiti, skema sijil dan medan JSON dikekalkan: LULUS.
+
+Nota pembinaan
+---------------
+Fail EXE Windows perlu dibina pada komputer Windows menggunakan `build_windows.bat`.
+Skrip pembinaan memasukkan kedua-dua fail pustaka yang diperlukan oleh aplikasi:
+`knowledge/SKILL.md` (katalog kanonik enjin) dan `knowledge/Panduan_Identiti_MS.md`
+(pustaka yang dipaparkan kepada pengguna).
+
+Had kepercayaan matematik
+-------------------------
+Sijil geometri F08 disemak berdasarkan AX.REAL, AX.EUCLID, AX.AREA dan D.UNIT.
+Peraturan katalog yang lain menggunakan rekod transformasi simbolik, metadata
+kebergantungan yang diaudit dan pengekalan domain asal. Terjemahan antara muka tidak
+mengubah logik pembuktian atau skema sijil.

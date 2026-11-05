@@ -1,0 +1,19 @@
+@echo off
+setlocal
+cd /d "%~dp0"
+where py >nul 2>nul
+if errorlevel 1 (
+  echo Python 3 tidak ditemukan. Pasang Python 3.11 atau versi lebih baharu dan aktifkan pilihan Add Python to PATH.
+  pause
+  exit /b 1
+)
+py -3 -m pip install --user -r requirements.txt
+if errorlevel 1 goto error
+py -3 app.py
+if errorlevel 1 goto error
+exit /b 0
+:error
+echo.
+echo Aplikasi tidak dapat dimulakan. Rujuk mesej ralat di atas.
+pause
+exit /b 1

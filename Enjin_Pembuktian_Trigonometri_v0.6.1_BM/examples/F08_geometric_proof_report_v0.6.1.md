@@ -1,0 +1,66 @@
+# Laporan Pembuktian Trigonometri
+
+Pernyataan:  sin(x)**2 + cos(x)**2  =  1
+Status: TERBUKTI (PROVED)
+Laluan pembuktian terpilih: GEOMETRI: G01 → G03 → G04
+
+Pembuktian geometri bebas membuktikan identiti ini melalui G01 (pembuktian Teorem Pythagoras menggunakan kaedah pembahagian luas), G03 (hubungan kuasa dua jarak Cartes) dan G04 (penggantian koordinat bulatan unit). Sijil geometri telah disemak semula dan disahkan. Tiada identiti daripada katalog trigonometri digunakan sebagai premis. Pembuktian ini berasaskan AX.REAL, AX.EUCLID, AX.AREA dan D.UNIT.
+
+## Syarat Domain Sepunya Asal
+
+Tiada syarat tambahan dikesan; kedua-dua belah ditakrifkan bagi semua nilai nyata pemboleh ubah yang terlibat.
+
+## Rantaian Pembuktian Geometri
+
+Berikut ialah langkah matematik sebenar yang disemak oleh sijil pembuktian geometri.
+
+1. G01 — Teorem Pythagoras melalui pembahagian geometri
+   Ambil sebuah segi tiga bersudut tegak yang mempunyai sisi tegak a dan b serta hipotenus c.
+   Susun empat segi tiga yang kongruen di dalam sebuah segi empat sama bersisi a+b. Hipotenus keempat-empat segi tiga itu membentuk empat sisi segi empat sama di bahagian tengah yang bersisi c.
+   Setiap sudut di bahagian tengah ialah 90° kerana jumlah dua sudut tirus bagi segi tiga bersudut tegak ialah 90°.
+   Luas segi empat sama di bahagian luar = jumlah luas empat segi tiga + luas segi empat sama di bahagian tengah:
+   (a+b)² = 4(ab/2) + c².
+   Kembangkan: a² + 2ab + b² = 2ab + c².
+   Tolak 2ab daripada kedua-dua belah: a² + b² = c².
+   Oleh itu, G01 membuktikan Teorem Pythagoras berdasarkan geometri Euclid dan sifat tambah luas.
+
+2. G03 — Teorem kuasa dua jarak Cartes
+   Ambil sebarang titik Cartes P=(u,v), dengan O=(0,0).
+   Unjuran serenjang pada paksi koordinat mempunyai panjang |u| dan |v|; OP ialah hipotenus bagi segi tiga bersudut tegak yang terbentuk.
+   Gunakan G01: OP² = |u|² + |v|² = u² + v².
+   Rumus yang sama turut terpakai pada kedua-dua paksi (u=0 atau v=0) melalui penggantian secara langsung.
+
+3. G04 — Penggantian menggunakan bulatan unit
+   Ambil θ = x sebagai sebarang sudut nyata dan pilih titik pada bulatan unit P=(cos(x), sin(x)).
+   Berdasarkan D.UNIT, titik tersebut mempunyai jejari OP=1 dan koordinat Cartes bertanda u=cos(x), v=sin(x).
+   Gunakan G03: OP² = u² + v².
+   Gantikan: 1² = cos²(x) + sin²(x).
+   Oleh itu, cos²(x) + sin²(x) = 1, bagi setiap sudut nyata x.
+
+4. Langkah akhir — Padankan teorem geometri dengan pernyataan yang hendak dibuktikan
+   Pemfaktoran tepat dalam sijil ialah: LHS − RHS = sin(x)**2 + cos(x)**2 - 1.
+   Baki ini bersamaan dengan (1) × (cos²(x) + sin²(x) − 1).
+   Berdasarkan G04, ungkapan dalam kurungan bernilai sifar; oleh itu LHS − RHS = (1)×0 = 0.
+   Maka sin(x)**2 + cos(x)**2 = 1 pada domain sepunya asal.
+
+## Pengesahan Semula Sijil Geometri
+
+Skema sijil: trigonometric-geometric-proof-certificate-v1
+Versi pemeriksa: 0.6.0-geo-checker-1
+Ringkasan sijil (SHA-256): 56547fd1b3faab6f4050265e0f560e5cfd93c8fe2f3e0979d004a1fcd8f3811c
+Status pengesahan semula: DISAHKAN (VERIFIED)
+Premis daripada katalog identiti trigonometri: Tiada
+Asas matematik yang dipercayai: AX.REAL, AX.EUCLID, AX.AREA, D.UNIT
+
+## Kesimpulan
+
+Sijil pembuktian geometri yang telah disemak semula membuktikan LHS − RHS = 0 pada domain sepunya asal.
+G01 membuktikan Teorem Pythagoras melalui pembahagian geometri; G03 memperoleh hubungan kuasa dua jarak Cartes; G04 menggunakan hubungan tersebut pada bulatan unit.
+Pembuktian ini berasaskan AX.REAL, AX.EUCLID, AX.AREA dan D.UNIT. Tiada identiti katalog F08/F09/F10 diandaikan sebagai premis.
+
+## Skop Enjin
+
+Ungkapan sudut nyata yang menggunakan sin, cos, tan, cot, sec dan csc, operasi aritmetik, kuasa, pi serta punca kuasa dua nyata.
+Bagi keputusan ini, skema geometri tetap G01/G03/G04 telah disemak semula secara bebas terhadap sijil pembuktian.
+Pembuktian ini berasaskan AX.REAL, AX.EUCLID, AX.AREA dan D.UNIT.
+Pensampelan berangka hanya digunakan untuk mencari contoh balas; kaedah ini tidak pernah digunakan untuk mengesahkan identiti.
