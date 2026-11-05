@@ -1,57 +1,66 @@
-TRIGONOMETRIC PROOF ENGINE v0.5.1 — TEST RESULTS
-================================================
+TRIGONOMETRIC PROOF ENGINE v0.5.1 — F08 GEOMETRY REPAIR VALIDATION
+==================================================================
 
 Environment
 -----------
 Python 3.13 runtime; SymPy dependency available.
 Windows executable build is not run in this Linux validation environment.
 
-Automated test suites
----------------------
+Automated test suites (run independently)
+-----------------------------------------
 1. tests/test_circularity.py
-   Result: 10 passed, 0 failed.
-   Coverage: F08 self-use, dependent-theorem blocking, equivalent target variants,
-   dependency closure, cycles, missing provenance, legacy certificate rejection,
-   algebra-only proofs, false claims and valid F09 -> F03 chaining.
+   Result: 11 passed, 0 failed.
+   Coverage: F08 proof available in all proof modes; F08/equivalent-goal exclusion;
+   renamed and legacy self-premises ignored; no trigonometric-simplifier fallback;
+   F09 dependency provenance through GEO.F08; fail-closed dependency behaviour;
+   cycle detection and saved-certificate roundtrip.
 
 2. tests/test_engine.py
    Result: 33 passed, 0 failed.
-   Coverage: parser, domain restrictions, proof directions, audited catalogue
-   loading, multi-identity proof routes, saved theorem replay and certificate records.
+   Coverage: parser, domain restrictions, proof directions, audited catalogue loading,
+   multi-identity proof routes, saved theorem replay and certificate records.
 
-3. tests/test_recognition.py
+3. tests/test_geometry.py
+   Result: 16 passed, 0 failed.
+   Coverage: canonical/reversed/rearranged/scaled F08, arbitrary angle arguments,
+   original-domain preservation, unrelated-angle rejection, exact certificate replay,
+   no trigonometric premises, digest/tamper/domain-ledger rejection, forged v4 F08
+   certificate rejection, F08 theorem admission only after geometric replay, and
+   proof route independence from SymPy trigsimp.
+
+4. tests/test_recognition.py
    Result: 10 passed, 0 failed.
-   Additional subtests: all 55 EQREC-001 through EQREC-055 classes matched
-   their dedicated structural acceptance examples.
-   Coverage: knowledge catalogue parity, task classification, graph intersections,
-   cancelled denominator retention, half-angle warning, degree notation, absolute
-   value notation, malformed input and the recognition/proof boundary.
+   Additional subtests: all 55 EQREC-001 through EQREC-055 structural acceptance
+   cases matched their dedicated examples.
 
-Total independently executed test methods: 53 passed, 0 failed.
-Total EQREC structural acceptance cases: 55 passed, 0 failed.
+TOTAL: 70 test methods passed, 0 failed; plus 55 EQREC acceptance subtests.
 
-Desktop UI smoke test
+The suites are run independently because a combined single-process discovery attempt
+exceeded this environment's command time limit. Each isolated suite completed
+successfully.
+
+Additional validation
 ---------------------
-Result: PASSED under xvfb-run.
-- Application imported and initialised.
-- Four tabs were created: Proof Workspace, Equation Recognition, Theorem Bank,
-  Knowledge Base.
-- All three knowledge documents loaded.
-- Recognition input and report widgets were created.
+- Python compileall: PASS (app.py, engine.py, geometry.py, recognition.py,
+  verify_certificate.py and tests).
+- F08 canonical proof: PROVED via GEO: G01 -> G03 -> G04.
+- F08 geometric certificate: VERIFIED by the offline CLI.
+- F09 dependent proof: PROVED via F09 -> F03; certificate provenance records
+  F09 -> F08 -> GEO.F08 -> G01 -> G03 -> G04.
+- Tkinter live proof action under Xvfb: PASS (four tabs; PROVE IDENTITY returns PROVED
+  and displays G01/G03/G04 plus the trusted foundations).
+- CLI tampered-domain test: PASS (a changed domain ledger is rejected even after its
+  SHA-256 digest is recomputed).
+- Certificate deep-copy test: PASS (mutating an exported copy does not mutate the
+  stored proof result certificate).
+- ZIP archive integrity: PASS (all entries passed `unzip -t`).
+- Fresh extraction smoke test: PASS (16 geometric tests passed; certificate CLI VERIFIED; app/engine imports succeeded; canonical F08 returned PROVED).
 
-Static validation
------------------
-- engine.py, recognition.py and app.py compile with py_compile.
-- recognition_catalogue_stats reports 55 knowledge entries, 55 implemented
-  class routes, 0 missing implementations and 0 unlisted routes.
-
-Known limitations
------------------
-- The Windows .exe has not been built in this Linux environment; use build_windows.bat
-  on Windows.
-- The recogniser classifies and recommends routes; it is not a complete equation solver.
-- The v0.5 geometric and analytic proof recipes are documented knowledge, not a
-  geometric/analytic certificate kernel. F08 remains INCONCLUSIVE when no independent
-  geometric checker is enabled.
-- A combined `unittest discover` run exceeded the command time limit in this environment;
-  each of the three test files was executed separately and passed in full.
+Mathematical trust boundary
+---------------------------
+The F08 certificate checker validates a fixed G01 dissection schema, exact area
+algebra, G03 signed-coordinate distance obligations, G04 unit-circle substitution,
+exact goal factorisation, original-domain ledger, dependency list and SHA-256 digest.
+The proof is relative to explicit trusted foundations AX.REAL, AX.EUCLID, AX.AREA
+and D.UNIT. This release does not claim a set-theoretic formalisation of all
+Euclidean geometry.

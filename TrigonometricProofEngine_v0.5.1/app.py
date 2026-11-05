@@ -435,8 +435,7 @@ class TrigProofApp(tk.Tk):
         self.premises_text.pack(fill="x")
         tk.Label(
             input_inner,
-            text="Only catalogue identities with audited, independent dependencies are searched. "
-                 "You may add extra identities here; use one per line: Name: left expression = right expression.",
+            text="Catalogue identities are admitted only through audited dependencies. Saved results require replayable certificates; raw user-entered equations are not proof authority. Use one reference per line: Name: left expression = right expression.",
             bg=self.WHITE, fg=self.MUTED, font=("Segoe UI", 8), anchor="w",
         ).pack(fill="x", pady=(5, 0))
         theorem_options = tk.Frame(input_inner, bg=self.WHITE)
@@ -498,8 +497,8 @@ class TrigProofApp(tk.Tk):
         report_scroll.pack(side="right", fill="y")
         self.result_text.pack(side="left", fill="both", expand=True)
         self.result_text.insert("1.0", "Welcome to version 0.5.1. Enter an identity and select PROVE IDENTITY.\n\n"
-                                "The proof workspace preserves the v0.4.1 circularity safeguards. The new Equation Recognition workspace classifies unfamiliar equation structures using 55 EQREC patterns. "
-                                "Recognition is not proof or a complete solution; geometric recipes remain documented until a geometric certificate checker is implemented.")
+                                "The proof workspace includes the independent F08 geometric certificate route G01 → G03 → G04, alongside the v0.4.1 circularity safeguards. "
+                                "The Equation Recognition workspace classifies unfamiliar equation structures using 55 EQREC patterns. Recognition remains separate from proof and complete equation solving.")
         self.result_text.configure(state="disabled")
         self.bind("<Control-Return>", lambda event: self.run_proof())
 
@@ -798,7 +797,10 @@ class TrigProofApp(tk.Tk):
         self.save_theorem_button.configure(state="normal" if result.status == "PROVED" else "disabled")
         self._set_report(self._format_result(result), result.status)
         self.after_idle(self._scroll_to_report)
-        refs = f"  ·  {len(result.rule_ids)} identity rule(s)" if result.rule_ids else ""
+        if getattr(result, "certificate_override", None):
+            refs = "  ·  GEO certificate G01 → G03 → G04"
+        else:
+            refs = f"  ·  {len(result.rule_ids)} identity rule(s)" if result.rule_ids else ""
         theorem_refs = f"  ·  {len(result.used_theorems)} established result(s)" if result.used_theorems else ""
         self.status_var.set(f"ANALYSIS COMPLETE  ·  {result.status}{refs}{theorem_refs}  ·  Offline symbolic engine")
 
@@ -818,15 +820,33 @@ class TrigProofApp(tk.Tk):
             lines.extend(f"• {condition}" for condition in result.domain_conditions)
         else:
             lines.append("No additional restrictions detected; both sides are defined for all real values of their variables.")
-        if result.rule_ids:
+        geometric_certificate = getattr(result, "certificate_override", None)
+        if geometric_certificate:
+            lines += ["", "INDEPENDENT GEOMETRIC PROOF CHAIN", "-" * 84,
+                      "G01 — Pythagorean theorem by dissection",
+                      "Four congruent right triangles tile a square of side a+b. The central square has side c. Exact area additivity gives (a+b)^2 = 4(ab/2)+c^2, hence a^2+b^2=c^2.",
+                      "",
+                      "G03 — Cartesian squared distance",
+                      "For P=(u,v), the perpendicular projections have lengths |u| and |v|. Therefore OP^2=u^2+v^2, including signed coordinates and axis cases.",
+                      "",
+                      f"G04 — Unit-circle substitution (angle θ = {geometric_certificate['angle_expression']})",
+                      "Construct P=(cos θ,sin θ) on the unit circle. Since OP=1, G03 gives cos^2 θ+sin^2 θ=1 for every real θ.",
+                      "",
+                      f"Goal factorisation: LHS−RHS = ({geometric_certificate['goal_multiplier']}) × (sin^2 θ+cos^2 θ−1).",
+                      "No F08/F09/F10 catalogue identity is used as a premise.",
+                      "",
+                      "TRUSTED FOUNDATIONS: AX.REAL, AX.EUCLID, AX.AREA, D.UNIT",
+                      "The fixed geometric schema and exact algebraic obligations were replayed. The result is PROVED relative to these explicit Euclidean foundations."]
+        elif result.rule_ids:
             identity_count = sum(bool(step.theorem_ref) for step in result.steps)
             chain = " → ".join(result.rule_ids)
             lines += ["", "DERIVATION CHAIN", "-" * 84,
                       f"Identity sequence: {chain}",
                       f"The selected route uses {identity_count} explicit identity application(s). Each application is shown in the proof steps below."]
-        lines += ["", "PROOF / ANALYSIS STEPS", "-" * 84]
-        if not result.steps:
-            lines.append("No symbolic proof steps were established by the selected strategy.")
+        if not geometric_certificate:
+            lines += ["", "PROOF / ANALYSIS STEPS", "-" * 84]
+            if not result.steps:
+                lines.append("No symbolic proof steps were established by the selected strategy.")
         for i, step in enumerate(result.steps, 1):
             side = f" [{step.side}]" if step.side else ""
             refs = f"  [Identity IDs: {', '.join(step.rule_ids)}]" if step.rule_ids else ""
@@ -845,10 +865,16 @@ class TrigProofApp(tk.Tk):
                 else:
                     lines.append("   Check: exact algebraic equivalence tested")
             lines.append("")
-        if result.rule_ids:
+        if result.rule_ids and not geometric_certificate:
             lines += ["IDENTITY DATABASE REFERENCES", "-" * 84,
                       ", ".join(result.rule_ids),
                       "Each listed ID is attached to an explicit identity-application step in the selected proof route.", ""]
+        elif geometric_certificate:
+            lines += ["GEOMETRIC CERTIFICATE NODES", "-" * 84,
+                      "G01 → G03 → G04 → GOAL", 
+                      f"Schema: {geometric_certificate['schema']}",
+                      f"SHA-256: {geometric_certificate['certificate_digest']}",
+                      "Catalogue identity premises: none", ""]
         if result.used_theorems:
             lines += ["IDENTITIES / THEOREMS USED", "-" * 84]
             for theorem in result.used_theorems:
@@ -858,6 +884,12 @@ class TrigProofApp(tk.Tk):
                 )
             lines.append("Proof search excludes the target and its dependent identities. Unknown provenance and uncertified saved results are not proof authority.")
             lines.append("")
+        if result.rule_ids and not geometric_certificate:
+            provenance = result.to_certificate().get("dependency_provenance", [])
+            if provenance:
+                lines += ["TRANSITIVE DEPENDENCY PROVENANCE", "-" * 84]
+                lines.extend(f"• {item}" for item in provenance)
+                lines.append("")
         if result.alternative_routes:
             lines += ["ALTERNATIVE PROOF ROUTES", "-" * 84]
             for index, route in enumerate(result.alternative_routes, 1):
@@ -868,10 +900,15 @@ class TrigProofApp(tk.Tk):
                 lines.append(f"   Steps: {len(route.steps)}")
             lines.append("")
         if result.status == "PROVED":
-            lines += ["CONCLUSION", "-" * 84,
-                      "The symbolic route establishes LHS − RHS = 0 on the common domain of the original expressions.",
-                      "Original domain restrictions remain in force even if a later algebraic form appears defined more broadly.",
-                      "The route is heuristic rather than a complete formal proof certificate; each recorded step is checked symbolically."]
+            if geometric_certificate:
+                lines += ["CONCLUSION", "-" * 84,
+                          "The independently replayed geometric certificate establishes LHS − RHS = 0 on the original common domain.",
+                          "F08 is the conclusion of G01 → G03 → G04, never an assumed premise. The proof is relative to AX.REAL, AX.EUCLID, AX.AREA and D.UNIT."]
+            else:
+                lines += ["CONCLUSION", "-" * 84,
+                          "The symbolic route establishes LHS − RHS = 0 on the common domain of the original expressions.",
+                          "Original domain restrictions remain in force even if a later algebraic form appears defined more broadly.",
+                          "The route is heuristic rather than a complete formal proof certificate; each recorded step is checked symbolically."]
         elif result.status == "DISPROVED":
             lines += ["COUNTEREXAMPLE", "-" * 84]
             if result.counterexample:
@@ -883,7 +920,7 @@ class TrigProofApp(tk.Tk):
                       "No proof was found by the selected strategy. No counterexample was found in the numerical checks. The result is inconclusive, not a proof of truth or falsity."]
         lines += ["", "ENGINE SCOPE", "-" * 84,
                   "Real-angle expressions using sin, cos, tan, cot, sec and csc, arithmetic, powers, pi and real square roots.",
-                  "User premises are validated as identities before use. Each theorem rewrite is checked symbolically.",
+                  "Catalogue and saved-theorem dependencies are checked before use; the GEO F08 certificate is replayed independently.",
                   "Catalogue search is bounded: up to 7 identity applications and 260 visited expression states in full-catalogue mode.",
                   "An INCONCLUSIVE result may mean the proof chain exceeds these search limits; it does not establish falsity.",
                   "Numerical sampling is used only to find counterexamples; it is never used to certify an identity."]

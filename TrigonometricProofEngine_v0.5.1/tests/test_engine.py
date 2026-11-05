@@ -47,10 +47,11 @@ class ParserTests(unittest.TestCase):
 class ProofTests(unittest.TestCase):
     def test_pythagorean_identity_and_rule_id(self):
         result = prove_identity("sin(x)**2 + cos(x)**2", "1")
-        # v0.4 accepted this through self-use or unaudited premises/rules.
-        self.assertEqual(result.status, "INCONCLUSIVE")
-        self.assertEqual(result.steps, [])
+        self.assertEqual(result.status, "PROVED")
+        self.assertEqual(result.selected_route, "GEO: G01 → G03 → G04")
+        self.assertEqual(result.rule_ids, ("G01", "G03", "G04"))
         self.assertEqual(result.used_theorems, [])
+        self.assertEqual(result.to_certificate()["schema"], "trigonometric-geometric-proof-certificate-v1")
 
     def test_double_angle_identity(self):
         result = prove_identity("(1 - cos(2*x))/sin(2*x)", "tan(x)")
@@ -80,17 +81,15 @@ class ProofTests(unittest.TestCase):
 
     def test_specific_proof_direction(self):
         result = prove_identity("1", "sin(x)**2+cos(x)**2", "RHS to LHS")
-        # v0.4 accepted this through self-use or unaudited premises/rules.
-        self.assertEqual(result.status, "INCONCLUSIVE")
-        self.assertEqual(result.steps, [])
+        self.assertEqual(result.status, "PROVED")
+        self.assertEqual(result.selected_route, "GEO: G01 → G03 → G04")
         self.assertEqual(result.used_theorems, [])
 
     def test_alternative_routes_are_returned(self):
         result = prove_identity("sin(x)**2+cos(x)**2", "1")
-        # v0.4 accepted this through self-use or unaudited premises/rules.
-        self.assertEqual(result.status, "INCONCLUSIVE")
-        self.assertEqual(result.steps, [])
-        self.assertEqual(result.used_theorems, [])
+        self.assertEqual(result.status, "PROVED")
+        self.assertEqual(result.selected_route, "GEO: G01 → G03 → G04")
+        self.assertEqual(result.alternative_routes, [])
 
     def test_certificate_contains_checked_steps(self):
         result = prove_identity("sin(x+y)", "sin(x)*cos(y)+cos(x)*sin(y)")
@@ -156,9 +155,8 @@ class ReusableTheoremTests(unittest.TestCase):
             "1", "sin(x)**2 + cos(x)**2", "Use supplied identities",
             premises=["Pythagorean: sin(t)**2 + cos(t)**2 = 1"],
         )
-        # v0.4 accepted this through self-use or unaudited premises/rules.
-        self.assertEqual(result.status, "INCONCLUSIVE")
-        self.assertEqual(result.steps, [])
+        self.assertEqual(result.status, "PROVED")
+        self.assertEqual(result.selected_route, "GEO: G01 → G03 → G04")
         self.assertEqual(result.used_theorems, [])
 
     def test_theorem_domain_conditions_are_preserved(self):

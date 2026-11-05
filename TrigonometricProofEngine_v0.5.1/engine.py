@@ -9,6 +9,7 @@ recognition.py and remains separate from proof certification.
 from __future__ import annotations
 
 import ast
+import copy
 import json
 import math
 import random
@@ -20,6 +21,13 @@ from typing import Callable, Iterable
 
 import sympy as sp
 from sympy.simplify.fu import fu
+
+from geometry import (
+    GEOMETRIC_CERTIFICATE_SCHEMA,
+    build_f08_geometric_certificate,
+    match_f08_claim,
+    verify_geometric_certificate,
+)
 
 ENGINE_VERSION = "0.5.1"
 DEFAULT_SKILL_PATH = Path(__file__).resolve().parent / "knowledge" / "SKILL.md"
@@ -91,9 +99,12 @@ class ProofResult:
     alternative_routes: list[ProofRoute] = field(default_factory=list)
     rule_ids: tuple[str, ...] = ()
     used_theorems: list[dict] = field(default_factory=list)
+    certificate_override: dict | None = None
 
     def to_certificate(self) -> dict:
-        """Return a portable JSON certificate with each step's symbolic check."""
+        """Return a portable certificate; GEO certificates are independently replayable."""
+        if self.certificate_override is not None:
+            return copy.deepcopy(self.certificate_override)
         def step_record(step: ProofStep) -> dict:
             valid = None
             if step.previous_expression is not None:
@@ -114,9 +125,10 @@ class ProofResult:
         return {
             "schema": "trigonometric-proof-certificate-v4",
             "engine_version": ENGINE_VERSION,
-            "dependency_policy": "audited-catalogue-and-replayed-v4-certificates",
+            "dependency_policy": "audited-catalogue-replayed-v4-and-v0.5.1-geo-certificates",
             "catalogue_dependency_manifest": {k: list(v) for k, v in AUDITED_DEPENDENCIES.items()},
-            "trusted_foundations": {"F01-F04": "quotient/reciprocal definitions", "F08": "unit-circle theorem, SKILL.md B01; not an engine-generated proof"},
+            "dependency_provenance": _dependency_provenance(self.rule_ids),
+            "trusted_foundations": {"F01-F04": "quotient/reciprocal definitions", "F08": "replayed G01 → G03 → G04 geometric certificate; not an unexplained root"},
             "scope": ["sin", "cos", "tan", "cot", "sec", "csc"],
             "claim": {"lhs": sp.sstr(self.lhs), "rhs": sp.sstr(self.rhs)},
             "status": self.status,
@@ -162,7 +174,23 @@ class ProofResult:
             lines.extend(f"- `{condition}`" for condition in self.domain_conditions)
         else:
             lines.append("- No additional restrictions detected.")
-        if self.rule_ids:
+        if self.certificate_override is not None:
+            lines += [
+                "", "## Independent geometric proof chain", "",
+                "1. **G01 — Pythagorean theorem by dissection.** Four congruent right triangles tile a square of side `a+b`; the central square has side `c`. Exact area additivity gives `(a+b)^2 = 4(ab/2)+c^2`, hence `a^2+b^2=c^2`.",
+                "2. **G03 — Cartesian squared distance.** Orthogonal projections of `P=(u,v)` have lengths `|u|` and `|v|`. G01 gives `OP^2=u^2+v^2`, including negative coordinates and axis cases.",
+                f"3. **G04 — Unit-circle substitution.** For arbitrary real angle `θ={sp.sstr(self.certificate_override['angle_expression'])}`, construct `P=(cos θ,sin θ)` with `OP=1`. G03 gives `cos^2 θ+sin^2 θ=1`.",
+                "4. **Goal matching.** The requested LHS−RHS is the exact non-trigonometric multiplier recorded in the certificate times the G04 relation. No F08/F09/F10 catalogue theorem is used as a premise.",
+                "",
+                "### Explicit trusted foundations",
+                "- `AX.REAL`: ordered real arithmetic and real-valued angle expressions.",
+                "- `AX.EUCLID`: Euclidean incidence, perpendicular projections and congruence.",
+                "- `AX.AREA`: area additivity for the dissection.",
+                "- `D.UNIT`: the unit-circle point has signed coordinates `(cos θ,sin θ)` and radius one.",
+                "",
+                "The certificate checker replays the fixed construction schema and exact algebraic obligations. This is a checked proof relative to these explicitly declared foundations, not a set-theoretic formalisation of all Euclidean geometry.",
+            ]
+        elif self.rule_ids:
             identity_count = sum(bool(step.theorem_ref) for step in self.steps)
             lines += [
                 "", "## Derivation chain", "",
@@ -170,22 +198,32 @@ class ProofResult:
                 f"- **Identity applications:** {identity_count}",
                 "- Each identity is applied as a separate, recorded substitution below.",
             ]
-        lines += ["", "## Proof / analysis steps", ""]
-        for index, step in enumerate(self.steps, 1):
-            ids = f" (Identity IDs: {', '.join(step.rule_ids)})" if step.rule_ids else ""
-            lines.append(f"{index}. **{step.title}** — {step.side}{ids}")
-            if step.previous_expression is not None:
-                lines.append(f"   - From: `{sp.sstr(step.previous_expression)}`")
-            lines.append(f"   - To: `{sp.sstr(step.expression)}`")
-            if step.note:
-                lines.append(f"   - Reason: {step.note}")
-            if step.theorem_ref:
-                lines.append(f"   - Previously established result: **{step.theorem_ref}**")
-            if step.substitution:
-                mapping = ", ".join(f"{name} → {value}" for name, value in step.substitution)
-                lines.append(f"   - Variable substitution: {mapping}")
-            if step.domain_conditions:
-                lines.append(f"   - Conditions for this use: {', '.join(step.domain_conditions)}")
+        if self.certificate_override is None:
+            lines += ["", "## Proof / analysis steps", ""]
+            for index, step in enumerate(self.steps, 1):
+                ids = f" (Identity IDs: {', '.join(step.rule_ids)})" if step.rule_ids else ""
+                lines.append(f"{index}. **{step.title}** — {step.side}{ids}")
+                if step.previous_expression is not None:
+                    lines.append(f"   - From: `{sp.sstr(step.previous_expression)}`")
+                lines.append(f"   - To: `{sp.sstr(step.expression)}`")
+                if step.note:
+                    lines.append(f"   - Reason: {step.note}")
+                if step.theorem_ref:
+                    lines.append(f"   - Previously established result: **{step.theorem_ref}**")
+                if step.substitution:
+                    mapping = ", ".join(f"{name} → {value}" for name, value in step.substitution)
+                    lines.append(f"   - Variable substitution: {mapping}")
+                if step.domain_conditions:
+                    lines.append(f"   - Conditions for this use: {', '.join(step.domain_conditions)}")
+        else:
+            lines += [
+                "", "## Certificate replay", "",
+                f"- **Schema:** `{self.certificate_override['schema']}`",
+                f"- **Route:** `{self.certificate_override['selected_route']}`",
+                f"- **Certificate digest:** `{self.certificate_override['certificate_digest']}`",
+                "- **Replay status:** VERIFIED",
+                "- **Trigonometric identity premises:** none",
+            ]
         if self.alternative_routes:
             lines += ["", "## Alternative proof routes", ""]
             for route in self.alternative_routes:
@@ -200,6 +238,11 @@ class ProofResult:
                     f"`{theorem.get('lhs', '')} = {theorem.get('rhs', '')}` "
                     f"({theorem.get('source', 'User supplied')})"
                 )
+        if self.rule_ids and self.certificate_override is None:
+            provenance = _dependency_provenance(self.rule_ids)
+            if provenance:
+                lines += ["", "## Transitive dependency provenance", ""]
+                lines.extend(f"- {item}" for item in provenance)
         if self.counterexample is not None:
             lines += ["", "## Counterexample", ""]
             lines.append(", ".join(f"{name} = {value:.12g}" for name, value in self.counterexample.items()))
@@ -1396,17 +1439,54 @@ def _difference_route(lhs: sp.Expr, rhs: sp.Expr, order_method: str = "Automatic
     return None
 
 
-# Audited dependencies from SKILL.md B01--B04 and the displayed formulas.
-# Empty tuples identify external foundations: definitions F01--F04 and the unit-circle
-# theorem F08. F08 is usable as a prior theorem, never to establish itself.
-# Unlisted catalogue rules have UNKNOWN provenance and fail closed.
+# Audited dependencies from SKILL.md B01--B04 and the v0.5 geometric kernel.
+# F01-F04 are definitional roots. F08 is NOT a root: it depends on a replayed
+# geometric certificate. Unlisted catalogue rules have UNKNOWN provenance.
 AUDITED_DEPENDENCIES = {
-    "F01": (), "F02": (), "F03": (), "F04": (), "F08": (),
+    "F01": (), "F02": (), "F03": (), "F04": (), "F08": ("GEO.F08",),
     "F05": ("F01", "F02"), "F06": ("F04",), "F07": ("F03",),
     "F09": ("F08", "F01", "F03"),
     "F10": ("F08", "F02", "F04"),
     "F11": ("F09",), "F12": ("F10",),
 }
+
+
+def _verified_geometric_f08_foundation() -> bool:
+    """Return true only if the canonical independent F08 GEO certificate replays."""
+    try:
+        lhs = parse_expression("sin(x)**2 + cos(x)**2")
+        rhs = parse_expression("1")
+        domain = _domain_conditions(lhs, rhs)
+        certificate = build_f08_geometric_certificate(lhs, rhs, domain)
+        if certificate is None:
+            return False
+        valid, _reason = verify_geometric_certificate(
+            certificate, parse_expression, lhs, rhs, domain
+        )
+        return bool(valid)
+    except Exception:
+        return False
+
+
+def _dependency_provenance(identity_ids: Iterable[str]) -> list[str]:
+    """Return the transitive audited dependency trace, including geometric F08."""
+    rows: list[str] = []
+    visited: set[str] = set()
+
+    def visit(identity_id: str):
+        if identity_id in visited:
+            return
+        visited.add(identity_id)
+        for dependency in AUDITED_DEPENDENCIES.get(identity_id, ()):
+            rows.append(f"{identity_id} depends on {dependency}")
+            if dependency == "GEO.F08":
+                rows.append("GEO.F08 is admitted only after replaying G01 → G03 → G04")
+            else:
+                visit(dependency)
+
+    for identity_id in identity_ids:
+        visit(identity_id)
+    return rows
 
 
 def _same_claim(lhs, rhs, theorem):
@@ -1443,6 +1523,8 @@ def _independent_premises(lhs, rhs, supplied, catalogue, include_catalogue=True)
     blocked = {t.identity_id for t in catalogue if _same_claim(lhs, rhs, t)}
 
     def safe_id(identity_id, stack=()):
+        if identity_id == "GEO.F08":
+            return _verified_geometric_f08_foundation()
         if identity_id in blocked or identity_id in stack or identity_id not in AUDITED_DEPENDENCIES:
             return False
         return all(safe_id(dep, stack + (identity_id,))
@@ -1460,6 +1542,15 @@ def _independent_premises(lhs, rhs, supplied, catalogue, include_catalogue=True)
             if _same_claim(t.lhs, t.rhs, canonical) and safe_id(t.identity_id):
                 return True
         cert = t.proof_certificate
+        if isinstance(cert, dict) and cert.get("schema") == GEOMETRIC_CERTIFICATE_SCHEMA:
+            valid, _reason = verify_geometric_certificate(
+                cert, parse_expression, t.lhs, t.rhs, t.domain_conditions
+            )
+            return bool(valid)
+        # A legacy/v4 status flag and symbolic oracle must never resurrect F08
+        # as an assumed premise. F08-shaped claims require the GEO certificate.
+        if match_f08_claim(t.lhs, t.rhs) is not None:
+            return False
         if not isinstance(cert, dict) or cert.get("schema") != "trigonometric-proof-certificate-v4" or cert.get("status") != "PROVED":
             return False
         claim = cert.get("claim", {})
@@ -1500,6 +1591,40 @@ def prove_identity(
         _normalize_condition_text(condition)
         for condition in (_domain_conditions(lhs, rhs) + _domain_conditions_from_text(lhs_text, rhs_text))
     ), key=str.casefold)
+    allowed_methods = {"Automatic", "LHS to RHS", "RHS to LHS",
+                       "Both sides to common form", "Difference method",
+                       "Angle expansion first", "Fu transformations first",
+                       "Algebraic reduction first", "Use supplied identities",
+                       "Use full identity catalogue"}
+    if method not in allowed_methods:
+        raise ValueError(f"Unknown proof strategy: {method}")
+
+    # Foundational F08 is attempted through the independent GEO kernel before
+    # any catalogue, trigonometric simplifier, or saved theorem is considered.
+    # This route is available in every proof mode and cannot use F08 as a premise.
+    geometric_certificate = build_f08_geometric_certificate(lhs, rhs, domain)
+    if geometric_certificate is not None:
+        valid, _reason = verify_geometric_certificate(
+            geometric_certificate, parse_expression, lhs, rhs, domain
+        )
+        if valid:
+            return ProofResult(
+                status="PROVED", lhs=lhs, rhs=rhs, steps=[],
+                domain_conditions=domain,
+                message=(
+                    "An independent geometric proof establishes the identity through "
+                    "G01 (Pythagorean dissection), G03 (Cartesian squared distance) "
+                    "and G04 (unit-circle substitution). The replayable GEO certificate "
+                    "passed. No trigonometric catalogue identity is used as a premise. "
+                    "The result is relative to the explicit trusted foundations "
+                    "AX.REAL, AX.EUCLID, AX.AREA and D.UNIT."
+                ),
+                selected_route="GEO: G01 → G03 → G04",
+                rule_ids=("G01", "G03", "G04"),
+                used_theorems=[],
+                certificate_override=geometric_certificate,
+            )
+
     supplied_theorems = parse_theorem_premises(premises or [])
     theorems = supplied_theorems
     if method == "Use full identity catalogue":
@@ -1516,13 +1641,6 @@ def prove_identity(
         # The complete directly applicable catalogue is always available in this mode.
         # User premises and the saved theorem bank are included as additional rules.
         theorems = supplied_theorems + load_catalogue_theorems()
-    allowed_methods = {"Automatic", "LHS to RHS", "RHS to LHS",
-                       "Both sides to common form", "Difference method",
-                       "Angle expansion first", "Fu transformations first",
-                       "Algebraic reduction first", "Use supplied identities",
-                       "Use full identity catalogue"}
-    if method not in allowed_methods:
-        raise ValueError(f"Unknown proof strategy: {method}")
     catalogue = load_catalogue_theorems()
     theorems = _independent_premises(lhs, rhs, supplied_theorems, catalogue,
                                    include_catalogue=method != "Use supplied identities")

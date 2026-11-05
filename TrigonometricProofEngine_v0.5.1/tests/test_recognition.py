@@ -125,9 +125,12 @@ class RecognitionSafetyTests(unittest.TestCase):
         with self.assertRaises(ExpressionInputError):
             recognize_problem("sin(x) + cos(x)")
 
-    def test_f08_remains_inconclusive_without_an_independent_geometric_checker(self):
+    def test_recognition_and_geometric_proof_are_separate_but_both_available(self):
+        recognised = recognize_problem("sin(x)**2+cos(x)**2=1", "Prove the identity.")
+        self.assertEqual(recognised.status, "RECOGNISED")
         result = prove_identity("sin(x)**2+cos(x)**2", "1")
-        self.assertEqual(result.status, "INCONCLUSIVE")
+        self.assertEqual(result.status, "PROVED")
+        self.assertEqual(result.selected_route, "GEO: G01 → G03 → G04")
         self.assertEqual(result.used_theorems, [])
 
 
