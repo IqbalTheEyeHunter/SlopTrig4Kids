@@ -1,0 +1,57 @@
+TRIGONOMETRIC PROOF ENGINE v0.5.1 — TEST RESULTS
+================================================
+
+Environment
+-----------
+Python 3.13 runtime; SymPy dependency available.
+Windows executable build is not run in this Linux validation environment.
+
+Automated test suites
+---------------------
+1. tests/test_circularity.py
+   Result: 10 passed, 0 failed.
+   Coverage: F08 self-use, dependent-theorem blocking, equivalent target variants,
+   dependency closure, cycles, missing provenance, legacy certificate rejection,
+   algebra-only proofs, false claims and valid F09 -> F03 chaining.
+
+2. tests/test_engine.py
+   Result: 33 passed, 0 failed.
+   Coverage: parser, domain restrictions, proof directions, audited catalogue
+   loading, multi-identity proof routes, saved theorem replay and certificate records.
+
+3. tests/test_recognition.py
+   Result: 10 passed, 0 failed.
+   Additional subtests: all 55 EQREC-001 through EQREC-055 classes matched
+   their dedicated structural acceptance examples.
+   Coverage: knowledge catalogue parity, task classification, graph intersections,
+   cancelled denominator retention, half-angle warning, degree notation, absolute
+   value notation, malformed input and the recognition/proof boundary.
+
+Total independently executed test methods: 53 passed, 0 failed.
+Total EQREC structural acceptance cases: 55 passed, 0 failed.
+
+Desktop UI smoke test
+---------------------
+Result: PASSED under xvfb-run.
+- Application imported and initialised.
+- Four tabs were created: Proof Workspace, Equation Recognition, Theorem Bank,
+  Knowledge Base.
+- All three knowledge documents loaded.
+- Recognition input and report widgets were created.
+
+Static validation
+-----------------
+- engine.py, recognition.py and app.py compile with py_compile.
+- recognition_catalogue_stats reports 55 knowledge entries, 55 implemented
+  class routes, 0 missing implementations and 0 unlisted routes.
+
+Known limitations
+-----------------
+- The Windows .exe has not been built in this Linux environment; use build_windows.bat
+  on Windows.
+- The recogniser classifies and recommends routes; it is not a complete equation solver.
+- The v0.5 geometric and analytic proof recipes are documented knowledge, not a
+  geometric/analytic certificate kernel. F08 remains INCONCLUSIVE when no independent
+  geometric checker is enabled.
+- A combined `unittest discover` run exceeded the command time limit in this environment;
+  each of the three test files was executed separately and passed in full.
