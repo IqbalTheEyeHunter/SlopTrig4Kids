@@ -1,0 +1,48 @@
+TRIGONOMETRIC PROOF ENGINE v0.6.0 — TEST RESULTS
+================================================
+
+Test command:
+  python -m unittest discover -s tests -v
+
+Result:
+  49 tests passed
+  0 failures
+  0 errors
+  Runtime: approximately 12.3 seconds
+
+Coverage includes:
+  - Independent geometric proof of F08 through G01 -> G03 -> G04.
+  - Derivation of F09 and F10 from F08 and their quotient/reciprocal definitions.
+  - F08/F09/F10 reuse for distinct non-self goals.
+  - Rejection of direct theorem self-use, circular dependency cycles, untrusted
+    supplied premises, and legacy certificate bypasses.
+  - Parameterised squared-linear-combination proof using an explicit F08 step.
+  - Rejection of the originally typed false parameter identity by counterexample.
+  - Domain tracking for F09/F03 and F10/F04 proofs.
+  - Exact agreement between question-bank IDs and proof-solution IDs.
+  - Question-bank/solution counts and exclusion of the false near-miss.
+
+Question-bank generation summary:
+  Raw assignments enumerated:             61,397
+  Unique candidate claims checked:            156
+  Unique claims returned PROVED:               150
+  Template entries returned PROVED:            255
+  Supplementary theorem-reuse questions:         3
+  Total question-bank entries:                 258
+  Candidate claims remaining INCONCLUSIVE:       6
+
+Supplementary theorem-reuse routes:
+  SUP-001 corrected parameter identity: F08
+  SUP-002 different target using F09:     F09
+  SUP-003 different target using F10:     F10
+
+False near-miss:
+  (p*cos(x)+q*sin(x))**2 + (p*sin(x)-p*cos(x))**2 = p**2+q**2
+  Status: DISPROVED
+  Exact counterexample: p=1, q=0, x=0 gives LHS=2 and RHS=1.
+
+Validation note:
+  The 48 tests verify the implemented proof rules, certificate/dependency
+  policies, domain handling, and generated artifact consistency. The GEO
+  certificate is checked relative to AX.REAL, AX.EUCLID, AX.AREA and D.UNIT;
+  this package is not a general-purpose kernel-verified formal theorem prover.
