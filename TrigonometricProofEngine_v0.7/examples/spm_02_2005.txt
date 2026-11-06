@@ -1,0 +1,53 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: -2*sin(x)**2 - cot(x)**2 + csc(x)**2 = cos(2*x)
+Status: PROVED
+Selected route: Rotation coordinates and exact polynomial reduction
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+sin(x) ≠ 0
+
+ROTATION AND POLYNOMIAL PROOF
+
+1. The two columns of R(a) are (cos(a),sin(a)) and (-sin(a),cos(a)).
+2. Apply R(a) to (cos(b),sin(b)): its coordinates are (cos(a)*cos(b)-sin(a)*sin(b), sin(a)*cos(b)+cos(a)*sin(b)).
+3. By rotation composition this point has angle a+b. Thus the two addition formulas follow from geometry, without a catalogue identity.
+4. Repeated composition gives integer multiples. R(-a)=R(a)^T gives negative multiples.
+5. Choose each base angle as variable / LCM(coefficient denominators). This covers half-angles without a tangent substitution or extra division.
+6. Replace tan, cot, sec, csc by their coordinate definitions on the ORIGINAL common domain.
+7. Cross-multiply the rational forms on that domain and exhibit the numerator as a sum of polynomial multiples of circle relations.
+
+BASE ANGLES
+coord_C0 = cos(x), coord_S0 = sin(x)
+
+EXACT ANGLE / DEFINITION EXPANSIONS
+sin(x) = coord_S0
+cos(2*x) = coord_C0**2 - coord_S0**2
+cot(x) = coord_C0/coord_S0
+csc(x) = 1/coord_S0
+
+RATIONAL FORMS
+LHS = -coord_C0**2/coord_S0**2 - 2*coord_S0**2 + coord_S0**(-2)
+RHS = coord_C0**2 - coord_S0**2
+
+CROSS-MULTIPLICATION ON THE ORIGINAL DOMAIN
+N = -coord_C0**2*coord_S0**2 - coord_C0**2 - coord_S0**4 + 1
+Original denominators stay nonzero. No new restriction is imposed.
+
+POLYNOMIAL WITNESS
+N = (-coord_S0**2 - 1) * (coord_C0**2 + coord_S0**2 - 1)
+Each circle relation is zero by the replayed geometric foundation.
+Remainder = 0; hence LHS - RHS = 0.
+
+CERTIFICATE REPLAY: VERIFIED
+No catalogue target or dependent identity is used as a premise.
+Foundations: D.UNIT, G.ROT, G.SPECIAL, G.CIRCLE, AX.REAL
+Replayable exact polynomial witness relative to the listed geometric foundations; not a Lean/Coq proof object. Original domain restrictions remain in force.
+
+CONCLUSION
+An independent rotation-coordinate derivation and exact polynomial witness establish equality on the original common domain. All angle expansions and the zero remainder were replayed. No target identity is assumed.
+
+ENGINE SCOPE
+Rotation route: rational expressions; rational affine angles; up to 4 angle variables, multipliers 24, base denominators 120, and pi/12 shifts.
+Unsupported expressions fall back to the bounded catalogue search. INCONCLUSIVE does not establish falsity.
+Numerical sampling never certifies an identity.

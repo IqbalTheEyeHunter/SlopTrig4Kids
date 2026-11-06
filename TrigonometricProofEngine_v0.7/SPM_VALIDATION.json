@@ -1,0 +1,128 @@
+[
+  {
+    "exercise": 1,
+    "year": "2003",
+    "lhs": "tan(x)+cot(x)",
+    "rhs": "2*csc(2*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 3.971
+  },
+  {
+    "exercise": 2,
+    "year": "2005",
+    "lhs": "csc(x)**2-2*sin(x)**2-cot(x)**2",
+    "rhs": "cos(2*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.353
+  },
+  {
+    "exercise": 3,
+    "year": "2008",
+    "lhs": "2*tan(x)/(2-sec(x)**2)",
+    "rhs": "tan(2*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.378
+  },
+  {
+    "exercise": 4,
+    "year": "2012",
+    "lhs": "2/(1+cos(2*x))",
+    "rhs": "sec(x)**2",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.281
+  },
+  {
+    "exercise": 5,
+    "year": "2013",
+    "lhs": "tan(x)*sin(2*x)",
+    "rhs": "1-cos(2*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.228
+  },
+  {
+    "exercise": 6,
+    "year": "2015",
+    "lhs": "2*cos(x+pi/4)*cos(x-pi/4)",
+    "rhs": "cos(2*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.459
+  },
+  {
+    "exercise": 7,
+    "year": "2016",
+    "lhs": "sin(2*x)/(tan(x)**2+2*cos(x)**2-sec(x)**2)",
+    "rhs": "tan(2*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.474
+  },
+  {
+    "exercise": 8,
+    "year": "2017",
+    "lhs": "2*tan(x)*cos(x)**2",
+    "rhs": "sin(2*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.184
+  },
+  {
+    "exercise": 9,
+    "year": "2018",
+    "lhs": "sin(3*x+pi/6)-sin(3*x-pi/6)",
+    "rhs": "cos(3*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.645
+  },
+  {
+    "exercise": 10,
+    "year": "2019",
+    "lhs": "tan(x/2)",
+    "rhs": "(1-cos(x))/sin(x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.294
+  },
+  {
+    "exercise": 11,
+    "year": "2020",
+    "lhs": "(cos(2*x)+2*sin(x)-1)/(cos(x)-0.5*sin(2*x))",
+    "rhs": "2*tan(x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.454
+  },
+  {
+    "exercise": 12,
+    "year": "2021",
+    "lhs": "2*cot(x)**2*sin(x)**2",
+    "rhs": "1+cos(2*x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.269
+  },
+  {
+    "exercise": 13,
+    "year": "2022",
+    "lhs": "cot(x/2)-tan(x/2)",
+    "rhs": "2*cot(x)",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.337
+  },
+  {
+    "exercise": 14,
+    "year": "2024",
+    "lhs": "cos(2*x)",
+    "rhs": "cos(x)**2-sin(x)**2",
+    "status": "PROVED",
+    "certificate_replay": true,
+    "seconds": 0.257
+  }
+]

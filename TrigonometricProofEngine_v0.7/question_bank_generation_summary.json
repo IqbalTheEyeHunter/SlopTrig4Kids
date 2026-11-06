@@ -1,0 +1,102 @@
+{
+  "engine_version": "0.6.0",
+  "alphabet": [
+    "sin(x)",
+    "cos(x)",
+    "tan(x)",
+    "cot(x)",
+    "sec(x)",
+    "csc(x)",
+    "1"
+  ],
+  "raw_assignments": 61397,
+  "unique_candidates": 156,
+  "unique_proved": 150,
+  "template_entries": 255,
+  "supplementary_proved": 3,
+  "question_bank_total_entries": 258,
+  "template_summary": [
+    {
+      "template": "a + b = c",
+      "raw_assignments": 343,
+      "unique_candidates": 0,
+      "proved_entries": 0
+    },
+    {
+      "template": "a - b = c",
+      "raw_assignments": 343,
+      "unique_candidates": 0,
+      "proved_entries": 0
+    },
+    {
+      "template": "ab = c",
+      "raw_assignments": 343,
+      "unique_candidates": 16,
+      "proved_entries": 16
+    },
+    {
+      "template": "a/b = c",
+      "raw_assignments": 343,
+      "unique_candidates": 25,
+      "proved_entries": 21
+    },
+    {
+      "template": "ab + c = d",
+      "raw_assignments": 2401,
+      "unique_candidates": 2,
+      "proved_entries": 2
+    },
+    {
+      "template": "ab - c = d",
+      "raw_assignments": 2401,
+      "unique_candidates": 2,
+      "proved_entries": 2
+    },
+    {
+      "template": "abc = d",
+      "raw_assignments": 2401,
+      "unique_candidates": 36,
+      "proved_entries": 36
+    },
+    {
+      "template": "ab/c = d",
+      "raw_assignments": 2401,
+      "unique_candidates": 52,
+      "proved_entries": 48
+    },
+    {
+      "template": "ab + cd = e",
+      "raw_assignments": 16807,
+      "unique_candidates": 5,
+      "proved_entries": 5
+    },
+    {
+      "template": "ab - cd = e",
+      "raw_assignments": 16807,
+      "unique_candidates": 10,
+      "proved_entries": 8
+    },
+    {
+      "template": "ab/cd = e",
+      "raw_assignments": 16807,
+      "unique_candidates": 121,
+      "proved_entries": 117
+    }
+  ],
+  "proof_status_counts": {
+    "INCONCLUSIVE": 6,
+    "PROVED": 150
+  },
+  "supplementary_rule_ids": {
+    "SUP-001": [
+      "F08"
+    ],
+    "SUP-002": [
+      "F09"
+    ],
+    "SUP-003": [
+      "F10"
+    ]
+  },
+  "original_misprint_status": "DISPROVED"
+}
