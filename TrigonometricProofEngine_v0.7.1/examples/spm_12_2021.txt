@@ -1,0 +1,33 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: 2*sin(x)**2*cot(x)**2 = cos(2*x) + 1
+Status: PROVED
+Selected route: Algebraic manipulation using standard trigonometric identities
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+------------------------------------------------------------------------------------
+sin(x) ≠ 0
+
+ALGEBRAIC PROOF
+
+Start with the LHS: 2*sin(x)**2*cot(x)**2
+
+1. Use the quotient or reciprocal identity
+   = 2*(cos(x)/sin(x))**2*sin(x)**2
+   Reason: cot(x) = cos(x)/sin(x)
+
+2. Simplify the algebra
+   = (2*cos(x)**2 - 1) + 1
+   Reason: Combine like terms and cancel common factors on the original domain.
+
+3. Use the double-angle identity
+   = cos(2*x) + 1
+   Reason: cos(2*x) = 2*cos(x)**2 - 1.
+
+This is the RHS: cos(2*x) + 1.
+Hence LHS = RHS on the stated domain.
+
+CONCLUSION
+The LHS reaches the RHS using standard trigonometric identities and algebraic manipulation. The original domain restrictions remain in force.
+
+Every displayed equality is checked. Cancelling a factor does not remove the original domain restrictions.

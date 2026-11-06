@@ -1,0 +1,37 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: -sin(3*x - pi/6) + sin(3*x + pi/6) = cos(3*x)
+Status: PROVED
+Selected route: Algebraic manipulation using standard trigonometric identities
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+------------------------------------------------------------------------------------
+No additional restrictions.
+
+ALGEBRAIC PROOF
+
+Start with the LHS: -sin(3*x - pi/6) + sin(3*x + pi/6)
+
+1. Use the compound-angle identity
+   = -(sqrt(3)*sin(3*x)/2 - cos(3*x)/2) + sin(3*x + pi/6)
+   Reason: sin(A+B) = sin(A)*cos(B) + cos(A)*sin(B), with A = 3*x, B = -pi/6. Use the exact standard-angle values.
+
+2. Simplify the arithmetic
+   = -sqrt(3)*sin(3*x)/2 + sin(3*x + pi/6) + cos(3*x)/2
+   Reason: Combine constants and remove common numerical factors.
+
+3. Use the compound-angle identity
+   = (sqrt(3)*sin(3*x)/2 + cos(3*x)/2) - sqrt(3)*sin(3*x)/2 + cos(3*x)/2
+   Reason: sin(A+B) = sin(A)*cos(B) + cos(A)*sin(B), with A = 3*x, B = pi/6. Use the exact standard-angle values.
+
+4. Simplify the algebra
+   = cos(3*x)
+   Reason: Combine like terms and cancel common factors on the original domain.
+
+This is the RHS: cos(3*x).
+Hence LHS = RHS on the stated domain.
+
+CONCLUSION
+The LHS reaches the RHS using standard trigonometric identities and algebraic manipulation. The original domain restrictions remain in force.
+
+Every displayed equality is checked. Cancelling a factor does not remove the original domain restrictions.

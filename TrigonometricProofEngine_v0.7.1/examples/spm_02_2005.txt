@@ -1,0 +1,29 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: -2*sin(x)**2 - cot(x)**2 + csc(x)**2 = cos(2*x)
+Status: PROVED
+Selected route: Algebraic manipulation using standard trigonometric identities
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+------------------------------------------------------------------------------------
+sin(x) ≠ 0
+
+ALGEBRAIC PROOF
+
+Start with the LHS: -2*sin(x)**2 - cot(x)**2 + csc(x)**2
+
+1. Use the Pythagorean identity
+   = 1 - 2*sin(x)**2
+   Reason: csc(x)**2 - cot(x)**2 = 1.
+
+2. Use the double-angle identity
+   = cos(2*x)
+   Reason: cos(2*x) = 1 - 2*sin(x)**2.
+
+This is the RHS: cos(2*x).
+Hence LHS = RHS on the stated domain.
+
+CONCLUSION
+The LHS reaches the RHS using standard trigonometric identities and algebraic manipulation. The original domain restrictions remain in force.
+
+Every displayed equality is checked. Cancelling a factor does not remove the original domain restrictions.

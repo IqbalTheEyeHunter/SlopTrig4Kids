@@ -1,0 +1,51 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: -tan(x/2) + cot(x/2) = 2*cot(x)
+Status: PROVED
+Selected route: Algebraic manipulation using standard trigonometric identities
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+------------------------------------------------------------------------------------
+cos(x/2) ≠ 0
+sin(x) ≠ 0
+sin(x/2) ≠ 0
+
+ALGEBRAIC PROOF
+
+Start with the LHS: -tan(x/2) + cot(x/2)
+
+1. Use the quotient or reciprocal identity
+   = -sin(x/2)/cos(x/2) + cot(x/2)
+   Reason: tan(x/2) = sin(x/2)/cos(x/2)
+
+2. Use the quotient or reciprocal identity
+   = -sin(x/2)/cos(x/2) + cos(x/2)/sin(x/2)
+   Reason: cot(x/2) = cos(x/2)/sin(x/2)
+
+3. Simplify the algebra
+   = 2*(-sin(x/2)**2 + cos(x/2)**2)/((2*sin(x/2)*cos(x/2)))
+   Reason: Combine like terms and cancel common factors on the original domain.
+
+4. Use the double-angle identity
+   = 2*(-sin(x/2)**2 + cos(x/2)**2)/sin(x)
+   Reason: sin(2*u) = 2*sin(u)*cos(u), with u = x/2.
+
+5. Use the double-angle identity
+   = 2*cos(x)/sin(x)
+   Reason: cos(x) = -sin(x/2)**2 + cos(x/2)**2.
+
+6. Rearrange the algebra
+   = 2*(cos(x)/sin(x))
+   Reason: Use equivalent fractions, expansion or factorisation to write the expression in the required form.
+
+7. Use the quotient or reciprocal identity
+   = 2*cot(x)
+   Reason: cot(x) = cos(x)/sin(x)
+
+This is the RHS: 2*cot(x).
+Hence LHS = RHS on the stated domain.
+
+CONCLUSION
+The LHS reaches the RHS using standard trigonometric identities and algebraic manipulation. The original domain restrictions remain in force.
+
+Every displayed equality is checked. Cancelling a factor does not remove the original domain restrictions.

@@ -1,0 +1,63 @@
+TRIGONOMETRIC PROOF ENGINE v0.6.1 — VALIDATION RESULTS
+=====================================================
+
+Environment
+-----------
+Python 3.13; SymPy dependency available. Tests executed in the project directory.
+The Windows executable itself is not built in this Linux validation environment.
+
+Automated test suite
+--------------------
+Command:
+  python -m unittest discover -s tests -v
+
+Result:
+  56 tests passed
+  0 failures
+  0 errors
+  Runtime: 12.495 seconds
+
+New v0.6.1 geometric-report tests: 7 passed
+- Desktop report displays G01's geometric dissection and area derivation.
+- Desktop report displays G03's Cartesian squared-distance derivation.
+- Desktop report displays G04's unit-circle construction and substitution.
+- The final goal-matching step displays the exact certificate multiplier.
+- Geometric reports suppress misleading identity-application counts, empty symbolic-step
+  notices, and catalogue identity references.
+- Markdown exports display the same geometric proof steps.
+- Non-geometric catalogue reports retain the ordinary identity-rewrite layout.
+- v0.6.0 geometric certificates remain replayable.
+- New geometric certificates identify engine version 0.6.1.
+
+Inherited v0.6.0 regression tests: 49 passed
+- Circularity and theorem reuse, including F08/F09/F10.
+- Parameterised squared-linear-combination proof using F08.
+- Rejection of the originally typed false parameter identity.
+- Proof-domain preservation and theorem dependency provenance.
+- Question-bank and proof-solution ID matching and content integrity.
+
+Live UI and source validation
+-----------------------------
+- Tkinter live PROVE IDENTITY action under Xvfb: PASS.
+- Live UI displays all four geometric proof stages and VERIFIED replay metadata.
+- Generic empty symbolic-step and catalogue-reference sections are absent from GEO report.
+- Python compileall for app.py, engine.py, geometry.py and tests: PASS.
+
+Certificate compatibility
+-------------------------
+- New v0.6.1 geometric certificate replay: PASS.
+- v0.6.0 geometric certificate compatibility: PASS (legacy engine_version accepted,
+  with original certificate digest still verified).
+- Certificate schema and geometric checker version are unchanged.
+
+Scope and trust boundary
+-----------------------
+The geometric proof is relative to AX.REAL, AX.EUCLID, AX.AREA and D.UNIT. The report
+explains the checked G01/G03/G04 proof schema; it does not claim a set-theoretic
+formalisation of all Euclidean geometry.
+
+Training corpus
+---------------
+The question bank and proof solutions are carried forward unchanged from v0.6.0.
+Their generation metadata and cached candidate certificates therefore remain labelled
+v0.6.0; v0.6.1 changes proof-report presentation, not the finite candidate corpus.

@@ -1,0 +1,33 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: 2*cos(x)**2*tan(x) = sin(2*x)
+Status: PROVED
+Selected route: Algebraic manipulation using standard trigonometric identities
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+------------------------------------------------------------------------------------
+cos(x) ≠ 0
+
+ALGEBRAIC PROOF
+
+Start with the LHS: 2*cos(x)**2*tan(x)
+
+1. Use the quotient or reciprocal identity
+   = 2*(sin(x)/cos(x))*cos(x)**2
+   Reason: tan(x) = sin(x)/cos(x)
+
+2. Simplify the algebra
+   = 2*sin(x)*cos(x)
+   Reason: Combine like terms and cancel common factors on the original domain.
+
+3. Use the double-angle identity
+   = sin(2*x)
+   Reason: sin(2*u) = 2*sin(u)*cos(u), with u = x.
+
+This is the RHS: sin(2*x).
+Hence LHS = RHS on the stated domain.
+
+CONCLUSION
+The LHS reaches the RHS using standard trigonometric identities and algebraic manipulation. The original domain restrictions remain in force.
+
+Every displayed equality is checked. Cancelling a factor does not remove the original domain restrictions.

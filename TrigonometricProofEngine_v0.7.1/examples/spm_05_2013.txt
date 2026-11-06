@@ -1,0 +1,41 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: sin(2*x)*tan(x) = 1 - cos(2*x)
+Status: PROVED
+Selected route: Algebraic manipulation using standard trigonometric identities
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+------------------------------------------------------------------------------------
+cos(x) ≠ 0
+
+ALGEBRAIC PROOF
+
+Start with the LHS: sin(2*x)*tan(x)
+
+1. Use the quotient or reciprocal identity
+   = (sin(x)/cos(x))*sin(2*x)
+   Reason: tan(x) = sin(x)/cos(x)
+
+2. Simplify the arithmetic
+   = sin(x)*sin(2*x)/cos(x)
+   Reason: Combine constants and remove common numerical factors.
+
+3. Use the double-angle identity
+   = (2*sin(x)*cos(x))*sin(x)/cos(x)
+   Reason: sin(2*u) = 2*sin(u)*cos(u), with u = x.
+
+4. Simplify the algebra
+   = 1 - (1 - 2*sin(x)**2)
+   Reason: Combine like terms and cancel common factors on the original domain.
+
+5. Use the double-angle identity
+   = 1 - cos(2*x)
+   Reason: cos(2*x) = 1 - 2*sin(x)**2.
+
+This is the RHS: 1 - cos(2*x).
+Hence LHS = RHS on the stated domain.
+
+CONCLUSION
+The LHS reaches the RHS using standard trigonometric identities and algebraic manipulation. The original domain restrictions remain in force.
+
+Every displayed equality is checked. Cancelling a factor does not remove the original domain restrictions.

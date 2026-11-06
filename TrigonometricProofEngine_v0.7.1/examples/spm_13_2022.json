@@ -1,0 +1,278 @@
+{
+  "schema": "trigonometric-rotation-ring-certificate-v1",
+  "engine_version": "0.7.1",
+  "status": "PROVED",
+  "claim": {
+    "lhs": "-tan(x/2) + cot(x/2)",
+    "rhs": "2*cot(x)"
+  },
+  "domain_conditions": [
+    "cos(x/2) ≠ 0",
+    "sin(x) ≠ 0",
+    "sin(x/2) ≠ 0"
+  ],
+  "trusted_foundations": {
+    "D.UNIT": "sin(t), cos(t) are the coordinates of the point at oriented angle t on the unit circle.",
+    "G.ROT": "An oriented Euclidean rotation is linear, takes (1,0) to (cos(t),sin(t)), and takes (0,1) to (-sin(t),cos(t)). Composing rotations adds their oriented angles.",
+    "G.SPECIAL": "The positive coordinates at pi/4 and pi/6 follow from isosceles-right and equilateral triangles; quadrants determine signs.",
+    "G.CIRCLE": "G01 -> G03 -> G04 is replayed using the existing geometric checker.",
+    "AX.REAL": "Exact real-field arithmetic and polynomial ideal reduction."
+  },
+  "foundation_derivation": [
+    "The two columns of R(a) are (cos(a),sin(a)) and (-sin(a),cos(a)).",
+    "Apply R(a) to (cos(b),sin(b)): its coordinates are (cos(a)*cos(b)-sin(a)*sin(b), sin(a)*cos(b)+cos(a)*sin(b)).",
+    "By rotation composition this point has angle a+b. Thus the two addition formulas follow from geometry, without a catalogue identity.",
+    "Repeated composition gives integer multiples. R(-a)=R(a)^T gives negative multiples.",
+    "Choose each base angle as variable / LCM(coefficient denominators). This covers half-angles without a tangent substitution or extra division.",
+    "Replace tan, cot, sec, csc by their coordinate definitions on the ORIGINAL common domain.",
+    "Cross-multiply the rational forms on that domain and exhibit the numerator as a sum of polynomial multiples of circle relations."
+  ],
+  "circle_certificate": {
+    "schema": "trigonometric-geometric-proof-certificate-v1",
+    "engine_version": "0.7.1",
+    "checker_version": "0.6.0-geo-checker-1",
+    "status": "PROVED",
+    "profile": "GEO",
+    "claim_kind": "identity",
+    "claim": {
+      "lhs": "sin(t)**2 + cos(t)**2",
+      "rhs": "1"
+    },
+    "selected_route": "GEO: G01 → G03 → G04",
+    "angle_expression": "t",
+    "goal_multiplier": "1",
+    "original_domain_conditions": [],
+    "assumptions": [],
+    "open_assumptions": [],
+    "used_identity_ids": [],
+    "used_theorems": [],
+    "dependencies": [
+      "AX.REAL",
+      "AX.EUCLID",
+      "AX.AREA",
+      "D.UNIT",
+      "G01",
+      "G03",
+      "G04"
+    ],
+    "trusted_foundations": [
+      "AX.REAL",
+      "AX.EUCLID",
+      "AX.AREA",
+      "D.UNIT"
+    ],
+    "proof_nodes": [
+      {
+        "node_id": "G01",
+        "rule_id": "G01",
+        "depends_on": [
+          "AX.REAL",
+          "AX.EUCLID",
+          "AX.AREA"
+        ],
+        "claim": "a**2+b**2=c**2",
+        "preconditions": [
+          "a>0",
+          "b>0",
+          "c>0",
+          "right_triangle(a,b,c)"
+        ],
+        "construction": {
+          "outer_shape": "square",
+          "outer_side": "a+b",
+          "congruent_right_triangles": 4,
+          "triangle_legs": [
+            "a",
+            "b"
+          ],
+          "triangle_hypotenuse": "c",
+          "central_shape": "square",
+          "central_side": "c",
+          "central_angles": [
+            "pi/2",
+            "pi/2",
+            "pi/2",
+            "pi/2"
+          ],
+          "central_angle_reason": "the two acute angles of each right triangle sum to pi/2",
+          "interiors_disjoint": true,
+          "covers_outer_square": true
+        },
+        "area_identity": "(a+b)**2 = 4*(a*b/2)+c**2",
+        "algebraic_consequence": "a**2+b**2=c**2",
+        "checker_result": "PASS"
+      },
+      {
+        "node_id": "G03",
+        "rule_id": "G03",
+        "depends_on": [
+          "G01",
+          "AX.EUCLID",
+          "AX.REAL"
+        ],
+        "point": "P=(u,v)",
+        "projection_lengths": [
+          "abs(u)",
+          "abs(v)"
+        ],
+        "right_triangle_hypotenuse": "OP",
+        "squared_distance": "OP**2=u**2+v**2",
+        "signed_coordinates": true,
+        "axis_cases": [
+          "u=0",
+          "v=0"
+        ],
+        "checker_result": "PASS"
+      },
+      {
+        "node_id": "G04",
+        "rule_id": "G04",
+        "depends_on": [
+          "G03",
+          "D.UNIT"
+        ],
+        "angle_expression": "t",
+        "angle_range": "all real angles",
+        "unit_circle_point": "P=(cos(t),sin(t))",
+        "radius": "1",
+        "substitution": {
+          "OP": "1",
+          "u": "cos(t)",
+          "v": "sin(t)"
+        },
+        "conclusion": "cos(t)**2+sin(t)**2=1",
+        "quadrant_restriction": null,
+        "checker_result": "PASS"
+      },
+      {
+        "node_id": "GOAL",
+        "depends_on": [
+          "G04"
+        ],
+        "claim": {
+          "lhs": "sin(t)**2 + cos(t)**2",
+          "rhs": "1"
+        },
+        "angle_expression": "t",
+        "geometric_relation": "sin(theta)**2+cos(theta)**2-1=0",
+        "exact_multiplier": "1",
+        "factorisation": {
+          "lhs_minus_rhs": "sin(t)**2 + cos(t)**2 - 1",
+          "multiplier_times_relation": "sin(t)**2 + cos(t)**2 - 1"
+        },
+        "checker_result": "PASS"
+      }
+    ],
+    "certificate_note": "Independent geometric derivation relative to AX.REAL, AX.EUCLID, AX.AREA and D.UNIT. No trigonometric catalogue identity is used as a premise.",
+    "certificate_digest": "3a6a5e384a054e809c1ede89eac3a97480d85c2e8a1aac506e140d250ec9e470"
+  },
+  "base_angles": [
+    {
+      "variable": "x",
+      "angle": "x/2",
+      "cosine": "coord_C0",
+      "sine": "coord_S0"
+    }
+  ],
+  "angle_expansions": [
+    {
+      "from": "tan(x/2)",
+      "to": "coord_S0/coord_C0"
+    },
+    {
+      "from": "cot(x/2)",
+      "to": "coord_C0/coord_S0"
+    },
+    {
+      "from": "cot(x)",
+      "to": "(coord_C0**2 - coord_S0**2)/(2*coord_C0*coord_S0)"
+    }
+  ],
+  "rational_forms": {
+    "lhs": "coord_C0/coord_S0 - coord_S0/coord_C0",
+    "rhs": "(coord_C0**2 - coord_S0**2)/(coord_C0*coord_S0)"
+  },
+  "denominators": [
+    "coord_C0*coord_S0",
+    "coord_C0*coord_S0"
+  ],
+  "cross_multiplied_numerator": "0",
+  "circle_relations": [
+    "coord_C0**2 + coord_S0**2 - 1"
+  ],
+  "quotients": [],
+  "remainder": "0",
+  "certificate_note": "Replayable exact polynomial witness relative to the listed geometric foundations; not a Lean/Coq proof object. Original domain restrictions remain in force.",
+  "student_proof": {
+    "lhs": "-tan(x/2) + cot(x/2)",
+    "lhs_latex": "- \\tan{\\left(\\frac{x}{2} \\right)} + \\cot{\\left(\\frac{x}{2} \\right)}",
+    "rhs": "2*cot(x)",
+    "rhs_latex": "2 \\cot{\\left(x \\right)}",
+    "schema": "spm-algebra-trace-v1",
+    "steps": [
+      {
+        "after": "-sin(x/2)/cos(x/2) + cot(x/2)",
+        "after_latex": "\\frac{\\left(-1\\right) \\sin{\\left(\\frac{x}{2} \\right)}}{\\cos{\\left(\\frac{x}{2} \\right)}} + \\cot{\\left(\\frac{x}{2} \\right)}",
+        "before": "-tan(x/2) + cot(x/2)",
+        "before_latex": "- \\tan{\\left(\\frac{x}{2} \\right)} + \\cot{\\left(\\frac{x}{2} \\right)}",
+        "kind": "identity",
+        "reason": "tan(x/2) = sin(x/2)/cos(x/2)",
+        "title": "Use the quotient or reciprocal identity"
+      },
+      {
+        "after": "-sin(x/2)/cos(x/2) + cos(x/2)/sin(x/2)",
+        "after_latex": "\\frac{\\left(-1\\right) \\sin{\\left(\\frac{x}{2} \\right)}}{\\cos{\\left(\\frac{x}{2} \\right)}} + \\frac{\\cos{\\left(\\frac{x}{2} \\right)}}{\\sin{\\left(\\frac{x}{2} \\right)}}",
+        "before": "-sin(x/2)/cos(x/2) + cot(x/2)",
+        "before_latex": "\\frac{\\left(-1\\right) \\sin{\\left(\\frac{x}{2} \\right)}}{\\cos{\\left(\\frac{x}{2} \\right)}} + \\cot{\\left(\\frac{x}{2} \\right)}",
+        "kind": "identity",
+        "reason": "cot(x/2) = cos(x/2)/sin(x/2)",
+        "title": "Use the quotient or reciprocal identity"
+      },
+      {
+        "after": "2*(-sin(x/2)**2 + cos(x/2)**2)/((2*sin(x/2)*cos(x/2)))",
+        "after_latex": "\\frac{2 \\left(- \\sin^{2}{\\left(\\frac{x}{2} \\right)} + \\cos^{2}{\\left(\\frac{x}{2} \\right)}\\right)}{2 \\sin{\\left(\\frac{x}{2} \\right)} \\cos{\\left(\\frac{x}{2} \\right)}}",
+        "before": "-sin(x/2)/cos(x/2) + cos(x/2)/sin(x/2)",
+        "before_latex": "\\frac{\\left(-1\\right) \\sin{\\left(\\frac{x}{2} \\right)}}{\\cos{\\left(\\frac{x}{2} \\right)}} + \\frac{\\cos{\\left(\\frac{x}{2} \\right)}}{\\sin{\\left(\\frac{x}{2} \\right)}}",
+        "kind": "algebra",
+        "reason": "Combine like terms and cancel common factors on the original domain.",
+        "title": "Simplify the algebra"
+      },
+      {
+        "after": "2*(-sin(x/2)**2 + cos(x/2)**2)/sin(x)",
+        "after_latex": "\\frac{2 \\left(- \\sin^{2}{\\left(\\frac{x}{2} \\right)} + \\cos^{2}{\\left(\\frac{x}{2} \\right)}\\right)}{\\sin{\\left(x \\right)}}",
+        "before": "2*(-sin(x/2)**2 + cos(x/2)**2)/((2*sin(x/2)*cos(x/2)))",
+        "before_latex": "\\frac{2 \\left(- \\sin^{2}{\\left(\\frac{x}{2} \\right)} + \\cos^{2}{\\left(\\frac{x}{2} \\right)}\\right)}{2 \\sin{\\left(\\frac{x}{2} \\right)} \\cos{\\left(\\frac{x}{2} \\right)}}",
+        "kind": "identity",
+        "reason": "sin(2*u) = 2*sin(u)*cos(u), with u = x/2.",
+        "title": "Use the double-angle identity"
+      },
+      {
+        "after": "2*cos(x)/sin(x)",
+        "after_latex": "\\frac{2 \\cos{\\left(x \\right)}}{\\sin{\\left(x \\right)}}",
+        "before": "2*(-sin(x/2)**2 + cos(x/2)**2)/sin(x)",
+        "before_latex": "\\frac{2 \\left(- \\sin^{2}{\\left(\\frac{x}{2} \\right)} + \\cos^{2}{\\left(\\frac{x}{2} \\right)}\\right)}{\\sin{\\left(x \\right)}}",
+        "kind": "identity",
+        "reason": "cos(x) = -sin(x/2)**2 + cos(x/2)**2.",
+        "title": "Use the double-angle identity"
+      },
+      {
+        "after": "2*(cos(x)/sin(x))",
+        "after_latex": "2 \\frac{\\cos{\\left(x \\right)}}{\\sin{\\left(x \\right)}}",
+        "before": "2*cos(x)/sin(x)",
+        "before_latex": "\\frac{2 \\cos{\\left(x \\right)}}{\\sin{\\left(x \\right)}}",
+        "kind": "algebra",
+        "reason": "Use equivalent fractions, expansion or factorisation to write the expression in the required form.",
+        "title": "Rearrange the algebra"
+      },
+      {
+        "after": "2*cot(x)",
+        "after_latex": "2 \\cot{\\left(x \\right)}",
+        "before": "2*(cos(x)/sin(x))",
+        "before_latex": "2 \\frac{\\cos{\\left(x \\right)}}{\\sin{\\left(x \\right)}}",
+        "kind": "identity",
+        "reason": "cot(x) = cos(x)/sin(x)",
+        "title": "Use the quotient or reciprocal identity"
+      }
+    ]
+  }
+}

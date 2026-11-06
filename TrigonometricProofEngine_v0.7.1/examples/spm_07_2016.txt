@@ -1,0 +1,34 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: sin(2*x)/(2*cos(x)**2 + tan(x)**2 - sec(x)**2) = tan(2*x)
+Status: PROVED
+Selected route: Algebraic manipulation using standard trigonometric identities
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+------------------------------------------------------------------------------------
+cos(2*x) ≠ 0
+cos(x) ≠ 0
+
+ALGEBRAIC PROOF
+
+Start with the LHS: sin(2*x)/(2*cos(x)**2 + tan(x)**2 - sec(x)**2)
+
+1. Use the Pythagorean identity
+   = sin(2*x)/(2*cos(x)**2 - 1)
+   Reason: sec(x)**2 - tan(x)**2 = 1.
+
+2. Use the double-angle identity
+   = sin(2*x)/cos(2*x)
+   Reason: cos(2*x) = 2*cos(x)**2 - 1.
+
+3. Use the quotient or reciprocal identity
+   = tan(2*x)
+   Reason: tan(2*x) = sin(2*x)/cos(2*x)
+
+This is the RHS: tan(2*x).
+Hence LHS = RHS on the stated domain.
+
+CONCLUSION
+The LHS reaches the RHS using standard trigonometric identities and algebraic manipulation. The original domain restrictions remain in force.
+
+Every displayed equality is checked. Cancelling a factor does not remove the original domain restrictions.

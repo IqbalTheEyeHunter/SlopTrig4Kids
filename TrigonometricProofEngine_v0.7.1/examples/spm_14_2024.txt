@@ -1,0 +1,25 @@
+TRIGONOMETRIC IDENTITY REPORT
+====================================================================================
+Claim: cos(2*x) = -sin(x)**2 + cos(x)**2
+Status: PROVED
+Selected route: Algebraic manipulation using standard trigonometric identities
+
+ORIGINAL COMMON-DOMAIN CONDITIONS
+------------------------------------------------------------------------------------
+No additional restrictions.
+
+ALGEBRAIC PROOF
+
+Start with the LHS: cos(2*x)
+
+1. Use the compound-angle identity
+   = -sin(x)**2 + cos(x)**2
+   Reason: Write 2*x as (x) + (x). Apply cos(A+B) with A = B = x; then multiply the terms.
+
+This is the RHS: -sin(x)**2 + cos(x)**2.
+Hence LHS = RHS on the stated domain.
+
+CONCLUSION
+The LHS reaches the RHS using standard trigonometric identities and algebraic manipulation. The original domain restrictions remain in force.
+
+Every displayed equality is checked. Cancelling a factor does not remove the original domain restrictions.

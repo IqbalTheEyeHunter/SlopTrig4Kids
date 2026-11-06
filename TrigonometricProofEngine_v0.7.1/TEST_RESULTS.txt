@@ -1,0 +1,92 @@
+Trigonometric Proof Engine v0.7.1 — 2026-11-06
+Python 3.12.14, SymPy 1.14.0, Linux
+
+74 tests passed. All fourteen exercises pass in Automatic and Full Catalogue
+modes. All fourteen have replay-checked SPM algebraic explanations.
+Each displayed equality was checked individually for validity and continuity.
+Tests include false variants, domain preservation, altered explanation content,
+saved-theorem reuse, circularity, and v0.7 certificate compatibility.
+
+Also passed: validate_spm.py (14/14), standalone certificate replay for the
+user's secant-squared example, and compileall.
+Native Windows GUI and Windows executable build: not run in this environment.
+
+test_cycle_and_missing_provenance_fail_closed (test_circularity.CircularityAndReuseTests.test_cycle_and_missing_provenance_fail_closed) ... ok
+test_derived_parameter_identity_can_use_f08 (test_circularity.CircularityAndReuseTests.test_derived_parameter_identity_can_use_f08) ... ok
+test_direct_f08_goal_blocks_f08_descendants_as_premises (test_circularity.CircularityAndReuseTests.test_direct_f08_goal_blocks_f08_descendants_as_premises) ... ok
+test_f08_is_proved_geometrically_without_self_use (test_circularity.CircularityAndReuseTests.test_f08_is_proved_geometrically_without_self_use) ... ok
+test_f08_rearrangements_and_constant_scalings_are_geometric (test_circularity.CircularityAndReuseTests.test_f08_rearrangements_and_constant_scalings_are_geometric) ... ok
+test_f09_can_be_used_for_a_different_goal (test_circularity.CircularityAndReuseTests.test_f09_can_be_used_for_a_different_goal) ... ok
+test_f09_is_proved_from_f08_not_from_itself (test_circularity.CircularityAndReuseTests.test_f09_is_proved_from_f08_not_from_itself) ... ok
+test_f10_can_be_used_for_a_different_goal (test_circularity.CircularityAndReuseTests.test_f10_can_be_used_for_a_different_goal) ... ok
+test_f10_is_proved_from_f08_not_from_itself (test_circularity.CircularityAndReuseTests.test_f10_is_proved_from_f08_not_from_itself) ... ok
+test_legacy_certificate_cannot_bypass_provenance (test_circularity.CircularityAndReuseTests.test_legacy_certificate_cannot_bypass_provenance) ... ok
+test_original_misprinted_parameter_claim_is_false (test_circularity.CircularityAndReuseTests.test_original_misprinted_parameter_claim_is_false) ... ok
+test_untrusted_supplied_f08_cannot_prove_an_unrelated_goal (test_circularity.CircularityAndReuseTests.test_untrusted_supplied_f08_cannot_prove_an_unrelated_goal) ... ok
+test_valid_f08_f09_f10_certificates_keep_provenance (test_circularity.CircularityAndReuseTests.test_valid_f08_f09_f10_certificates_keep_provenance) ... ok
+test_algebraic_identity (test_engine.AlgebraAndDomainTests.test_algebraic_identity) ... ok
+test_cancelled_original_denominator_is_still_tracked (test_engine.AlgebraAndDomainTests.test_cancelled_original_denominator_is_still_tracked) ... ok
+test_domain_restrictions_preserved_through_f09_and_f03 (test_engine.AlgebraAndDomainTests.test_domain_restrictions_preserved_through_f09_and_f03) ... ok
+test_domain_restrictions_preserved_through_f10_and_f04 (test_engine.AlgebraAndDomainTests.test_domain_restrictions_preserved_through_f10_and_f04) ... ok
+test_false_identity_counterexample (test_engine.AlgebraAndDomainTests.test_false_identity_counterexample) ... ok
+test_markdown_export_has_valid_math_delimiters (test_engine.AlgebraAndDomainTests.test_markdown_export_has_valid_math_delimiters) ... ok
+test_original_parameter_typo_is_disproved (test_engine.AlgebraAndDomainTests.test_original_parameter_typo_is_disproved) ... ok
+test_angle_addition_is_derived_without_unaudited_catalogue (test_engine.CatalogueProofTests.test_angle_addition_is_derived_without_unaudited_catalogue) ... ok
+test_catalogue_statistics_and_index (test_engine.CatalogueProofTests.test_catalogue_statistics_and_index) ... ok
+test_certificate_records_f08_provenance (test_engine.CatalogueProofTests.test_certificate_records_f08_provenance) ... ok
+test_counterexample_precedes_catalogue_search (test_engine.CatalogueProofTests.test_counterexample_precedes_catalogue_search) ... ok
+test_f08_and_f11_chain_with_variable_substitution (test_engine.CatalogueProofTests.test_f08_and_f11_chain_with_variable_substitution) ... ok
+test_f08_is_available_for_a_different_parameter_identity (test_engine.CatalogueProofTests.test_f08_is_available_for_a_different_parameter_identity) ... ok
+test_f09_and_f03_chain_proves_a_different_claim (test_engine.CatalogueProofTests.test_f09_and_f03_chain_proves_a_different_claim) ... ok
+test_f09_as_a_lemma_for_another_claim (test_engine.CatalogueProofTests.test_f09_as_a_lemma_for_another_claim) ... ok
+test_f10_and_f04_chain_proves_a_different_claim (test_engine.CatalogueProofTests.test_f10_and_f04_chain_proves_a_different_claim) ... ok
+test_f10_as_a_lemma_for_another_claim (test_engine.CatalogueProofTests.test_f10_as_a_lemma_for_another_claim) ... ok
+test_half_angle_is_derived_by_rotation_coordinates (test_engine.CatalogueProofTests.test_half_angle_is_derived_by_rotation_coordinates) ... ok
+test_reverse_f08_uses_unique_shared_context_angle (test_engine.CatalogueProofTests.test_reverse_f08_uses_unique_shared_context_angle) ... ok
+test_unknown_dependencies_are_not_admitted (test_engine.CatalogueProofTests.test_unknown_dependencies_are_not_admitted) ... ok
+test_f08_constant_scaled_rearrangement_is_not_self_used (test_engine.FoundationalProofTests.test_f08_constant_scaled_rearrangement_is_not_self_used) ... ok
+test_f08_has_independent_geometric_proof (test_engine.FoundationalProofTests.test_f08_has_independent_geometric_proof) ... ok
+test_f08_reverse_direction_is_geometrically_proved (test_engine.FoundationalProofTests.test_f08_reverse_direction_is_geometrically_proved) ... ok
+test_f09_is_derived_from_f08_and_definitions (test_engine.FoundationalProofTests.test_f09_is_derived_from_f08_and_definitions) ... ok
+test_f10_is_derived_from_f08_and_definitions (test_engine.FoundationalProofTests.test_f10_is_derived_from_f08_and_definitions) ... ok
+test_basic_expression (test_engine.ParserTests.test_basic_expression) ... ok
+test_implicit_numeric_coefficient (test_engine.ParserTests.test_implicit_numeric_coefficient) ... ok
+test_pi_and_caret (test_engine.ParserTests.test_pi_and_caret) ... ok
+test_reject_attribute_access (test_engine.ParserTests.test_reject_attribute_access) ... ok
+test_reject_unsupported_function (test_engine.ParserTests.test_reject_unsupported_function) ... ok
+test_superscript_four (test_engine.ParserTests.test_superscript_four) ... ok
+test_textbook_squared_function_notation (test_engine.ParserTests.test_textbook_squared_function_notation) ... ok
+test_desktop_report_does_not_mislabel_geo_nodes_as_identity_rewrites (test_geometric_report.GeometricReportTests.test_desktop_report_does_not_mislabel_geo_nodes_as_identity_rewrites) ... ok
+test_desktop_report_shows_actual_geometric_derivation (test_geometric_report.GeometricReportTests.test_desktop_report_shows_actual_geometric_derivation) ... ok
+test_markdown_export_shows_same_geometric_steps (test_geometric_report.GeometricReportTests.test_markdown_export_shows_same_geometric_steps) ... ok
+test_new_certificates_identify_v071_engine (test_geometric_report.GeometricReportTests.test_new_certificates_identify_v071_engine) ... ok
+test_non_geometric_catalogue_report_keeps_identity_steps (test_geometric_report.GeometricReportTests.test_non_geometric_catalogue_report_keeps_identity_steps) ... ok
+test_scaled_and_rearranged_f08_reports_include_goal_matching (test_geometric_report.GeometricReportTests.test_scaled_and_rearranged_f08_reports_include_goal_matching) ... ok
+test_v060_geometric_certificates_remain_replayable (test_geometric_report.GeometricReportTests.test_v060_geometric_certificates_remain_replayable) ... ok
+test_v061_geometric_certificates_remain_replayable (test_geometric_report.GeometricReportTests.test_v061_geometric_certificates_remain_replayable) ... ok
+test_false_near_miss_is_not_in_question_bank (test_question_bank_artifacts.QuestionBankArtifactTests.test_false_near_miss_is_not_in_question_bank) ... ok
+test_generation_summary_matches_artifacts (test_question_bank_artifacts.QuestionBankArtifactTests.test_generation_summary_matches_artifacts) ... ok
+test_question_bank_and_solution_ids_match (test_question_bank_artifacts.QuestionBankArtifactTests.test_question_bank_and_solution_ids_match) ... ok
+test_question_bank_is_question_only (test_question_bank_artifacts.QuestionBankArtifactTests.test_question_bank_is_question_only) ... ok
+test_all_fourteen_in_both_main_modes (test_rotation.RotationProofTests.test_all_fourteen_in_both_main_modes) ... ok
+test_decimal_literals_are_exact (test_rotation.RotationProofTests.test_decimal_literals_are_exact) ... ok
+test_fourteen_false_near_misses (test_rotation.RotationProofTests.test_fourteen_false_near_misses) ... ok
+test_generic_angles_not_exercise_lookup (test_rotation.RotationProofTests.test_generic_angles_not_exercise_lookup) ... ok
+test_mutated_witnesses_fail_replay (test_rotation.RotationProofTests.test_mutated_witnesses_fail_replay) ... ok
+test_no_trigonometric_or_numerical_oracle (test_rotation.RotationProofTests.test_no_trigonometric_or_numerical_oracle) ... ok
+test_original_domains (test_rotation.RotationProofTests.test_original_domains) ... ok
+test_saved_rotation_theorem_reused_for_distinct_goal (test_rotation.RotationProofTests.test_saved_rotation_theorem_reused_for_distinct_goal) ... ok
+test_self_premise_is_still_blocked (test_rotation.RotationProofTests.test_self_premise_is_still_blocked) ... ok
+test_unsupported_branches_fail_closed (test_rotation.RotationProofTests.test_unsupported_branches_fail_closed) ... ok
+test_all_fourteen_have_checked_algebraic_chains (test_school_algebra.SchoolAlgebraTests.test_all_fourteen_have_checked_algebraic_chains) ... ok
+test_altered_explanations_are_rejected (test_school_algebra.SchoolAlgebraTests.test_altered_explanations_are_rejected) ... ok
+test_generic_renamed_and_scaled_angle_inputs (test_school_algebra.SchoolAlgebraTests.test_generic_renamed_and_scaled_angle_inputs) ... ok
+test_original_compound_angle_form_is_visible (test_school_algebra.SchoolAlgebraTests.test_original_compound_angle_form_is_visible) ... ok
+test_requested_example_has_visible_substitution (test_school_algebra.SchoolAlgebraTests.test_requested_example_has_visible_substitution) ... ok
+test_target_double_angle_is_not_cited_as_its_own_reason (test_school_algebra.SchoolAlgebraTests.test_target_double_angle_is_not_cited_as_its_own_reason) ... ok
+test_v070_rotation_certificate_remains_replayable (test_school_algebra.SchoolAlgebraTests.test_v070_rotation_certificate_remains_replayable) ... ok
+
+----------------------------------------------------------------------
+Ran 74 tests in 36.669s
+
+OK
